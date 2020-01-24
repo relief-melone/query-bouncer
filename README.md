@@ -25,6 +25,23 @@ Permissions are the basis of everything. A typical Permission to grant read acce
 }
 ```
 
+#### Internal Permissions
+
+Internal Permissions work in just the same way as regular ones do. But they manage Permissions for the Query Bouncer itsself. So in many cases you might want someone to be able to assign Roles to other users without giving them your admin Token to the service. Let's assume you want to assign an admin for your BlogPosts that is able to grant other People a Role of a Blogger. But the restriction is that this admin can only grant this permission if the Topic he wants this user to be able to read matches the one assigned for him as well. Then the internal Role Assignment would look like this. Don't worry too much about the Data Field in the PayloadRestriction. It will be explained in more detail in the [RoleAssignment Section](#roleassignments)
+
+```json
+{
+  "Title": "AssignBlogger",
+  "Collection": "roleassignments",
+  "Right": "create",
+  "PayloadRestriction" : {
+    "Data": {
+      "Topic": "${FavoriteTopic}"    
+    }
+  }
+}
+```
+
 #### Title
 The Title just identifies the permission and will be used to add it to the later described roles
 
@@ -173,26 +190,368 @@ Password for your user
 
 ## API
 
-### Permissions
+### Create New Permission
+Create a new Permission. See [Permissions](#Permissions) for details.
 
-#### Create Permission
+**URL:**    
+`/api/admin/permissions`   
+`/api/admin/internalPermissions`   
+**Method:** POST   
+**Auth required:** YES   
+**Auth Type:** Bearer Token (Cookie if InternalRoleAssignment present)  
+**Request Body Example**  
 
-#### Update Permission
+```json
+{  
+  "Title": "ReadBlogPosts",
+  "Collection": "blogposts",
+  "Right": "read",  
+  "PayloadRestriction": {
+    "Category": "${Category}"
+  }
+}
+```  
 
-#### Delete Permission
+#### Success Response
+**Code:** 201    
 
-### Roles
 
-#### Create Role
+**Response Data Example**
+```json
+{  
+  "Title": "ReadBlogPosts",
+  "Collection": "blogposts",
+  "Right": "read",  
+  "PayloadRestriction": {
+    "Category": "${Category}"
+  }
+}
+```
 
-#### Update Role
+
+### Get Current Permissions
+Get all Permissions currently available. If you have not already specified a Permission Role and InternalRoleAssignment for your user make sure you use the bearer token to authenticate
+
+**URL:**   
+`/api/admin/permissions`   
+`/api/admin/internalPermissions`
+**Method:** GET   
+**Auth required:** YES   
+**Auth Type:** Bearer Token (Cookie if proper RoleAssignment present) 
+
+#### Success Response
+**Code:** 200   
+**Content Example**   
+
+```json
+[{
+  "_id": "5b637ee00000000000000000",
+  "Title": "ReadBlogPosts",
+  "Collection": "blogposts",
+  "Right": "read",
+  "QueryRestriction" : {},
+  "PayloadRestriction": {}
+}]
+```
+
+### Update Existing Permission
+Update an existing Permission. See [Permissions](#Permissions) for details.
+
+**URL:** 
+`/api/admin/permissions/:PermissionTitle`   
+`/api/admin/internalPermissions/:PermissionTitle`   
+**Method:** PUT   
+**Auth required:** YES   
+**Auth Type:** Bearer Token (Cookie if proper RoleAssignment present) 
+**Request Body Example**   
+
+```json
+{  
+  "Title": "ReadBlogPosts",
+  "Collection": "blogposts",
+  "Right": "read",  
+  "PayloadRestriction": {
+    "Category": "${Category}"
+  }
+}
+```
+
+#### Success Response
+**Code:** 200      
+**Response Data Example**
+```json
+{  
+  "Title": "ReadBlogPosts",
+  "Collection": "blogposts",
+  "Right": "read",  
+  "PayloadRestriction": {
+    "Category": "${Category}"
+  }
+}
+```
+
+### Delete Permission
+Delete a Permission
+
+**URL:**    
+`/api/admin/permissions/:PermissionTitle`  
+(`/api/admin/internalPermissions/:PermissionTitle`)   
+**Method:** DELETE   
+**Auth required:** YES   
+**Auth Type:** Bearer Token (Cookie if proper RoleAssignment present)    
+
+#### Success Response
+**Code:** 200      
+**Request Body Example**  
+
+```json
+{  
+  "Title": "ReadBlogPosts",
+  "Collection": "blogposts",
+  "Right": "read",  
+  "PayloadRestriction": {
+    "Category": "${Category}"
+  }
+}
+```
+
+### Create Role
+Create a new Role
+
+**URL:** `/api/admin/roles` 
+**Method:** POST   
+**Auth required:** YES   
+**Auth Type:** Bearer Token (Cookie if proper RoleAssignment present)  
+
+**Request Body Example**   
+
+```json
+{ 
+  "Title": "FoodBlogger",
+  "Permissions": [
+    "ReadBlogPosts",
+    "CreateFoodBlogPosts"
+  ]
+}
+```
+
+#### Success Response
+**Code:** 201      
+**Success Response Body Example**  
+
+```json
+{ 
+  "_id": "5b637ee00000000000000000",
+  "Title": "FoodBlogger",
+  "Permissions": [
+    "ReadBlogPosts",
+    "CreateFoodBlogPosts"
+  ]
+}
+```
+
+### Get current Roles
+Get Roles currently available
+
+**URL:** `/api/admin/roles`     
+**Method:** GET    
+**Auth required:** YES   
+**Auth Type:** Bearer Token (Cookie if InternalRoleAssignment present)   
+
+#### Success Response
+**Code:** 200      
+**Success Response Body Example**  
+
+```json
+[{
+  "_id": "5b637ee00000000000000000",   
+  "Title": "FoodBlogger",
+  "Permissions": [
+    "ReadBlogPosts",
+    "CreateFoodBlogPosts"
+  ]
+}]
+```
+
+### Update existing Role Role
+Update an existing Role
+
+**URL:** `/api/admin/roles/:RoleTitle`      
+**Method:** PUT    
+**Auth required:** YES   
+**Auth Type:** Bearer Token (Cookie if InternalRoleAssignment present)   
+**Request Body Example**  
+
+```json
+{  
+  "Title": "FoodBlogger",
+  "Permissions": [
+    "ReadBlogPosts",
+    "CreateFoodBlogPosts",
+    "DeleteOwnPosts"
+  ]
+]
+```
+
+#### Success Response
+**Code:** 200      
+**Success Response Body Example**   
+**Request Body Example**  
+
+```json
+{
+  "_id": "5b637ee00000000000000000",   
+  "Title": "FoodBlogger",
+  "Permissions": [
+    "ReadBlogPosts",
+    "CreateFoodBlogPosts",
+    "DeleteOwnPosts"
+  ]
+]
+```
 
 #### Delete Role
+Delete an existing Role
 
-### Role Assignments
+**URL:** `/api/admin/roles/:RoleTitle`   
+**Method:** DELETE    
+**Auth required:** YES   
+**Auth Type:** Bearer Token (Cookie if InternalRoleAssignment present)   
+**Request Body Example**  
 
-#### Create Role Assignment
 
+#### Success Response
+**Code:** 200      
+**Success Response Body Example**   
+**Request Body Example**  
+
+```json
+{
+  "_id": "5b637ee00000000000000000",   
+  "Title": "FoodBlogger",
+  "Permissions": [
+    "ReadBlogPosts",
+    "CreateFoodBlogPosts",
+    "DeleteOwnPosts"
+  ]
+]
+```
+
+
+### Create Role Assignment
+Create a new RoleAssignment. Keep in mind that user has to match the [userPrimaryKey](#QBOUNCER_USER_PRIMARY_KEY) described in the Configuration Chapter. In this case we assume that it is the E-Mail.
+
+**URL:** `/api/admin/roleAssignments`
+**Method:** POST   
+**Auth required:** YES   
+**Auth Type:** Bearer Token (Cookie if InternalRoleAssignment present) 
+**Request Body Example**  
+
+```json
+{  
+  "User": "john.doe@hotmail.com",
+  "Role": "FoodBlogger",
+  "Data": {
+    "FavoriteTopic": "Food"
+  }
+}
+```  
+
+#### Success Response
+**Code:** 201   
+**Success Response Body Example**  
+
+```json
+{  
+  "_id": "5b637ee00000000000000000",   
+  "User": "john.doe@hotmail.com",
+  "Role": "FoodBlogger",
+  "Data": {
+    "FavoriteTopic": "Food"
+  }
+}
+```
+
+### Get Current Role Assignments
+Get all current Role Assignments
+**URL:** `/api/admin/roleAssignments`
+**Method:** GET   
+**Auth required:** YES   
+**Auth Type:** Bearer Token (Cookie if InternalRoleAssignment present) 
+
+#### Success Response
+**Code:** 200  
+**Success Response Body Example**  
+
+```json
+[{  
+  "_id": "5b637ee00000000000000000",   
+  "User": "john.doe@hotmail.com",
+  "Role": "FoodBlogger",
+  "Data": {
+    "FavoriteTopic": "Food"
+  }
+}]
+```
 #### Update Role Assignment
+Update an existing Role Assignment
+**URL:** `/api/admin/roleAssignments/:Id`
+**Method:** PUT    
+**Auth required:** YES   
+**Auth Type:** Bearer Token (Cookie if InternalRoleAssignment present) 
+**Request Body Example**  
+
+```json
+{  
+  "User": "john.doe@hotmail.com",
+  "Role": "FoodBlogger",
+  "Data": {
+    "FavoriteTopic": "Cars"
+  }
+}
+```  
+
+#### Success Response
+**Code:** 200   
+**Success Response Body Example**  
+
+```json
+{  
+  "_id": "5b637ee00000000000000000",   
+  "User": "john.doe@hotmail.com",
+  "Role": "FoodBlogger",
+  "Data": {
+    "FavoriteTopic": "Cars"
+  }
+}
+```
 
 #### Delete Role Assignment
+Delete an existing Role Assignment
+**URL:** `/api/admin/roleAssignments/:Id`
+**Method:** DELETE       
+**Auth required:** YES   
+**Auth Type:** Bearer Token (Cookie if InternalRoleAssignment present) 
+
+#### Success Response
+**Code:** 200   
+**Success Response Body Example**  
+
+```json
+{  
+  "_id": "5b637ee00000000000000000",   
+  "User": "john.doe@hotmail.com",
+  "Role": "FoodBlogger",
+  "Data": {
+    "FavoriteTopic": "Cars"
+  }
+}
+```
+
+
+# To Do's
+
+There's more work to do. The most recent additions will be
+
+- UI for managing Rights and Roles (separate Repo)
+- Support of MongoDBs Field Projection (which will enable Permissions to go down on Sub-Document level)
