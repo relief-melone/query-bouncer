@@ -390,7 +390,7 @@ Update an existing Role
     "CreateFoodBlogPosts",
     "DeleteOwnPosts"
   ]
-]
+}
 ```
 
 #### Success Response
@@ -407,7 +407,7 @@ Update an existing Role
     "CreateFoodBlogPosts",
     "DeleteOwnPosts"
   ]
-]
+}
 ```
 
 #### Delete Role
@@ -434,7 +434,7 @@ Delete an existing Role
     "CreateFoodBlogPosts",
     "DeleteOwnPosts"
   ]
-]
+}
 ```
 
 
