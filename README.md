@@ -234,7 +234,7 @@ Get all Permissions currently available. If you have not already specified a Per
 
 **URL:**   
 `/api/admin/permissions`   
-`/api/admin/internalPermissions`
+`/api/admin/internalPermissions`   
 **Method:** GET   
 **Auth required:** YES   
 **Auth Type:** Bearer Token (Cookie if proper RoleAssignment present) 
@@ -257,7 +257,7 @@ Get all Permissions currently available. If you have not already specified a Per
 ### Update Existing Permission
 Update an existing Permission. See [Permissions](#Permissions) for details.
 
-**URL:** 
+**URL:**   
 `/api/admin/permissions/:PermissionTitle`   
 `/api/admin/internalPermissions/:PermissionTitle`   
 **Method:** PUT   
@@ -318,7 +318,7 @@ Delete a Permission
 ### Create Role
 Create a new Role
 
-**URL:** `/api/admin/roles` 
+**URL:** `/api/admin/roles`   
 **Method:** POST   
 **Auth required:** YES   
 **Auth Type:** Bearer Token (Cookie if proper RoleAssignment present)  
@@ -441,7 +441,7 @@ Delete an existing Role
 ### Create Role Assignment
 Create a new RoleAssignment. Keep in mind that user has to match the [userPrimaryKey](#QBOUNCER_USER_PRIMARY_KEY) described in the Configuration Chapter. In this case we assume that it is the E-Mail.
 
-**URL:** `/api/admin/roleAssignments`
+**URL:** `/api/admin/roleAssignments`   
 **Method:** POST   
 **Auth required:** YES   
 **Auth Type:** Bearer Token (Cookie if InternalRoleAssignment present) 
@@ -473,9 +473,9 @@ Create a new RoleAssignment. Keep in mind that user has to match the [userPrimar
 ```
 
 ### Get Current Role Assignments
-Get all current Role Assignments
-**URL:** `/api/admin/roleAssignments`
-**Method:** GET   
+Get all current Role Assignments    
+**URL:** `/api/admin/roleAssignments`    
+**Method:** GET     
 **Auth required:** YES   
 **Auth Type:** Bearer Token (Cookie if InternalRoleAssignment present) 
 
@@ -494,9 +494,9 @@ Get all current Role Assignments
 }]
 ```
 #### Update Role Assignment
-Update an existing Role Assignment
-**URL:** `/api/admin/roleAssignments/:Id`
-**Method:** PUT    
+Update an existing Role Assignment    
+**URL:** `/api/admin/roleAssignments/:Id`    
+**Method:** PUT     
 **Auth required:** YES   
 **Auth Type:** Bearer Token (Cookie if InternalRoleAssignment present) 
 **Request Body Example**  
@@ -527,8 +527,8 @@ Update an existing Role Assignment
 ```
 
 #### Delete Role Assignment
-Delete an existing Role Assignment
-**URL:** `/api/admin/roleAssignments/:Id`
+Delete an existing Role Assignment    
+**URL:** `/api/admin/roleAssignments/:Id`    
 **Method:** DELETE       
 **Auth required:** YES   
 **Auth Type:** Bearer Token (Cookie if InternalRoleAssignment present) 
