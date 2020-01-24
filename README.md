@@ -390,7 +390,7 @@ Update an existing Role
     "CreateFoodBlogPosts",
     "DeleteOwnPosts"
   ]
-]
+}
 ```
 
 #### Success Response
@@ -407,7 +407,7 @@ Update an existing Role
     "CreateFoodBlogPosts",
     "DeleteOwnPosts"
   ]
-]
+}
 ```
 
 #### Delete Role
@@ -434,7 +434,7 @@ Delete an existing Role
     "CreateFoodBlogPosts",
     "DeleteOwnPosts"
   ]
-]
+}
 ```
 
 
@@ -555,3 +555,7 @@ There's more work to do. The most recent additions will be
 
 - UI for managing Rights and Roles (separate Repo)
 - Support of MongoDBs Field Projection (which will enable Permissions to go down on Sub-Document level)
+
+Eventually we will also add
+
+- Support for more Query Languages like SQL
