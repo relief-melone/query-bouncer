@@ -1,0 +1,4 @@
+export default {
+  AUTHENTICATOR_HOST: process.env.AUTHENTICATOR_HOST || 'http://localhost:8081',
+  AUTHENTICATOR_REJECT_WITHOUT_COOKIE: process.env.AUTHENTICATOR_REJECT_WITHOUT_COOKIE || 'false'
+};

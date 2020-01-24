@@ -1,0 +1,31 @@
+{
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.formatOnSave": false,
+  "eslint.autoFixOnSave": true,
+  "eslint.run": "onType",
+  "eslint.validate": [
+      {
+          "autoFix": true,
+          "language": "vue"
+      },
+      {
+          "autoFix": true,
+          "language": "javascript"
+      },
+      {
+          "autoFix": true,
+          "language": "html"
+      },
+      {
+          "autoFix": true,
+          "language": "typescript"
+      }
+  ],
+  "tslint.enable": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "mos.port": "",
+}

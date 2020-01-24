@@ -1,0 +1,25 @@
+# JavaScript-Files are Compiled files
+*.js
+*.js.map
+
+# Compiled files
+/dist
+
+# dependencies
+/node_modules
+
+# test results
+/coverage
+/.nyc_output
+
+# temp
+temp/
+
+/.vscode/.env
+/.vscode/archive
+
+# Package-lock
+package-lock.json
+
+# Whitelist
+!.eslintrc.js
