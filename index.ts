@@ -36,7 +36,7 @@ app.use('/api/admin/permissions', createPermissionRouter());
 app.use('/api/admin/roles', routeRoles);
 app.use('/api/admin/roleAssignments', routeRoleAssignments);
 app.use('/api/v1', routeMain);
-app.use('/', (req,res,next) => res.send('<h1>Authorizor is running!</h1>'));
+app.use('/', (req,res,next) => res.send('<h1>Query Bouncer is running!</h1>'));
 
 app.listen(expressConfig.httpPort, () => {
   console.log(`HTTP Server listening on ${expressConfig.httpPort}`);
