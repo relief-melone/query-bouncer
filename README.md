@@ -9,7 +9,9 @@ The Query Bouncer is a containerized Microservice to work together with [rm-Auth
 It will do that by adjusting a database query sent from the backend in alignment with a users permissions. 
 The updated query will be sent back and can be used to retrieve data from the database that the user is allowed to see/create...
 
-Currently Queries for MongoDB are supported.
+The upside is that the Query bouncer will never handle your live business data but will only adjust queries you make to the database.
+
+Currently only Queries for MongoDB are supported.
 
 There are two components that are mandatory if you want to use the Query Bouncer. You'll need a running instance of *rm-authenticator* and the *query-bouncer* itsself. If you are using node.js as Backend we also recommend using the *query-bouncer* and the *rm-session-populate* as plugins to further make the use easier and enable you to focus on writing your application.
 
