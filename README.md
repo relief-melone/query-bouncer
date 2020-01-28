@@ -1,9 +1,22 @@
 # Query Bouncer
 
+The Goal of Query Bouncer is to let you worry about your application and not about your Authentication and Authorization in a Container Environment.
+
+![architecture](./documentation/architectureOverview.png "Architecture Overview")
+
 The Query Bouncer is a containerized Microservice to work together with [rm-Authenticator](https://github.com/relief-melone/rm-authenticator) as a versatile Role Based Access Control System for your Application.
+
 It will do that by adjusting a database query sent from the backend in alignment with a users permissions. 
 The updated query will be sent back and can be used to retrieve data from the database that the user is allowed to see/create...
+
 Currently Queries for MongoDB are supported.
+
+There are two components that are mandatory if you want to use the Query Bouncer. You'll need a running instance of *rm-authenticator* and the *query-bouncer* itsself. If you are using node.js as Backend we also recommend using the *query-bouncer* and the *rm-session-populate* as plugins to further make the use easier and enable you to focus on writing your application.
+
+1. **rm-authenticator:** Easy way to authenticate your user with just a Docker Container. Works with different OAuth providers like facebook, linkedin and google+. [(link)](https://github.com/relief-melone/rm-authenticator)
+2. **rm-session-populate:** Middleware for Express. It will automatically communicate with the Authenticator and add a user object to your Express **req** with all the information you need [(link)](https://github.com/relief-melone/rm-session-populator)
+3. **Query Bouncer:** Set up your Role Based Access System with a comfortable REST-API and use it to automatically modify queries and payloads based on your users permissions.
+4. **Query Bouncer Mongoose Plugin:** A Plugin that handles all the communication with the authorizer automatically so you can focus on writing your application. [(link)](https://github.com/relief-melone/query-bouncer-mongoose-plugin)
 
 ## Description of the elements
 
