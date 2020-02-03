@@ -15,10 +15,18 @@ Currently only Queries for MongoDB are supported.
 
 There are two components that are mandatory if you want to use the Query Bouncer. You'll need a running instance of *rm-authenticator* and the *query-bouncer* itsself. If you are using node.js as Backend we also recommend using the *query-bouncer* and the *rm-session-populate* as plugins to further make the use easier and enable you to focus on writing your application.
 
-1. **rm-authenticator:** Easy way to authenticate your user with just a Docker Container. Works with different OAuth providers like facebook, linkedin and google+. [(link)](https://github.com/relief-melone/rm-authenticator)
-2. **rm-session-populate:** Middleware for Express. It will automatically communicate with the Authenticator and add a user object to your Express **req** with all the information you need [(link)](https://github.com/relief-melone/rm-session-populator)
-3. **Query Bouncer:** Set up your Role Based Access System with a comfortable REST-API and use it to automatically modify queries and payloads based on your users permissions.
-4. **Query Bouncer Mongoose Plugin:** A Plugin that handles all the communication with the authorizer automatically so you can focus on writing your application. [(link)](https://github.com/relief-melone/query-bouncer-mongoose-plugin)
+1. **rm-authenticator:** Easy way to authenticate your user with just a Docker Container. Works with different OAuth providers like facebook, linkedin and google+. 
+   - [GitHub](https://github.com/relief-melone/rm-authenticator)
+   - [Docker](https://hub.docker.com/repository/docker/reliefmelone/rm-authenticator)
+2. **rm-session-populator:** Middleware for Express. It will automatically communicate with the Authenticator and add a user object to your Express **req** with all the information you need
+   - [GitHub](https://github.com/relief-melone/rm-session-populator)
+   - [NPM](https://www.npmjs.com/package/rm-session-populator)
+3. **Query Bouncer:** Set up your Role Based Access System with a comfortable REST-API and use it to automatically modify queries and payloads based on your users permissions. 
+   - [GitHub](https://github.com/relief-melone/query-bouncer)
+   - [Docker](https://hub.docker.com/r/reliefmelone/query-bouncer)
+4. **Query Bouncer Mongoose Plugin:** A Plugin that handles all the communication with the authorizer automatically so you can focus on writing your application. 
+   - [GitHub](https://github.com/relief-melone/query-bouncer-mongoose-plugin)
+   - [NPM](https://www.npmjs.com/package/query-bouncer-mongoose-plugin)
 
 ## Description of the elements
 
