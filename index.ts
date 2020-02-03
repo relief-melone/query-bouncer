@@ -1,6 +1,6 @@
 import express from 'express';
 import expressConfig from './src/configs/config.express';
-import authenticatorConfig from './src/configs/config.authenticator';
+import configSessionPopulator from './src/configs/config.sessionPopulator';
 import cookieParser from 'cookie-parser';
 import sessionPopulate from 'rm-session-populator';
 
@@ -13,9 +13,6 @@ import routeMain from './src/routes/route.main';
 import setCorsHeaders from './src/services/middleware/setCorsHeaders';
 import grantPreflight from './src/services/middleware/grantPreflight';
 
-
-
-
 const app = express();
 app.use(setCorsHeaders);
 app.use(grantPreflight);
@@ -25,7 +22,7 @@ app.use(express.urlencoded({
 }));
 
 app.use(cookieParser());
-app.use(sessionPopulate(authenticatorConfig));
+app.use(sessionPopulate(configSessionPopulator));
 
 // Connect To Database
 connectToDb();
