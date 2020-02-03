@@ -2,7 +2,7 @@
 
 The Goal of Query Bouncer is to let you worry about your application and not about your Authentication and Authorization in a Container Environment.
 
-![architecture](./documentation/architectureOverview.png "Architecture Overview")
+![architecture](https://raw.githubusercontent.com/relief-melone/query-bouncer/master/documentation/architectureOverview.png "Architecture Overview")
 
 The Query Bouncer is a containerized Microservice to work together with [rm-Authenticator](https://github.com/relief-melone/rm-authenticator) as a versatile Role Based Access Control System for your Application.
 
