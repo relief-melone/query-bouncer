@@ -146,7 +146,7 @@ role assignments each containing exactly one Role.
 The Identification of the user. The Authenticator will send back user information. In the section Environment Variables you can see how to set which of those parameters
 you want to use as identification. By default it is the _id of the user but in this case we went with email for a better understanding. There are also special users you can assign. 
 
-*$anyone*: will be a RoleAssignment that is valid for anyonone making a web request. Even if that person is not authenticated (If you manually set [AUTHENTICATOR_REJECT_WITHOUT_COOKIE](#authenticator_reject_without_cookie) to true this will have no effect as Requests of unauthenticated users will 
+*$anyone*: will be a RoleAssignment that is valid for anyonone making a web request. Even if that person is not authenticated (If you manually set [AUTHENTICATOR_REJECT_WITHOUT_AUTHENTICATION](#authenticator_reject_without_authentication) to true this will have no effect as Requests of unauthenticated users will 
 immediately be rejected).
 
 *$authenticated*: is the special user that makes this role assignment valid for any user that has been authenticated by the Authenticator and whose
@@ -183,7 +183,7 @@ will determine what the user is allowed to do and what not.
 #### AUTHENTICATOR_HOST
 The Host where the Query Bouncer will be able to reach the Authenticator. Defaults to http://localhost:8081 if you are hosting it on your machine as well for testing purposes
 
-### AUTHENTICATOR_REJECT_WITHOUT_COOKIE
+### AUTHENTICATOR_REJECT_WITHOUT_AUTHENTICATION
 You can set if you want users that are not sending a cookie will be rejected immediately by the Query Bouncer. This will cause that only authenticated users will be able to use
 the API at all. Defaults to false
 
