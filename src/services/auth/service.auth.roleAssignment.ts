@@ -24,6 +24,8 @@ export default async (
   
   try {
     const roleAssignmentsOfUser = await getRoleAssignmentsForUser(user);
+    console.log(`User: ${user}`);
+    console.log(`Roles: ${roleAssignmentsOfUser}`);
     const allRestrictions = (await Promise.all(roleAssignmentsOfUser.map(async roleAssignment => {
       const role = await getRoleByTitle(roleAssignment.Role );
       if(role){
