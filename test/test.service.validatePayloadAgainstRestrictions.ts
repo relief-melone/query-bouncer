@@ -1,7 +1,35 @@
 import { expect } from 'chai';
 import validatePayloadAgainstRestrictions from '../src/services/queries/service.validatePayloadAgainstRestrictions';
 
-describe('service.validatePayloadAgainstRestrictions', () => {
+describe.only('service.validatePayloadAgainstRestrictions', () => {
+  it('will throw if the payload does only match a combination of restrictions', () => {
+    // Prepare
+    const payload = {
+      Title : 'Something',
+      SomeReferenceId: '12345',
+    };
+    const restrictions = [
+      { SomeReferenceId: '12345', Title:'SomethingElse' },
+      { SomeReferenceId: '45678', Title:'Something' },
+    ];
+
+    // Execute
+    expect(() => {validatePayloadAgainstRestrictions(payload, restrictions); }).to.throw();
+  });
+  it('will not throw if a restriction doesnt define a field, so this field not restricted if other conditions of that restriction are met', () => {
+    // Prepare
+    const payload = {
+      Title : 'Something',
+      SomeReferenceId: '12345',
+    };
+    const restrictions = [
+      { SomeReferenceId: '12345', Title:'SomethingElse' },
+      { SomeReferenceId: '12345' },
+    ];
+
+    // Execute
+    expect(() => {validatePayloadAgainstRestrictions(payload, restrictions); }).not.to.throw();
+  });
   it('will not throw if the payload matches the restrictions', () => {
     // Prepare
     const payload = {
@@ -10,15 +38,14 @@ describe('service.validatePayloadAgainstRestrictions', () => {
     };
     const restrictions = [
       { SomeReferenceId: '12345' },
-      { SomeReferenceId: '45678' },
-      { FieldNotInPayload: '12345' },
+      { SomeReferenceId: '987654' }
     ];
 
     // Execute
     expect(() => {validatePayloadAgainstRestrictions(payload, restrictions); }).not.to.throw();
   });
 
-  it('will throw if the payload does not match the restrictions', () => {
+  it('will throw if the payload does not match the restriction', () => {
     // Prepare
     const payload = {
       Title : 'Something',
@@ -26,7 +53,17 @@ describe('service.validatePayloadAgainstRestrictions', () => {
     };
     const restrictions = [
       { SomeReferenceId: '12345' },
-      { SomeReferenceId: '45678' },
+    ];
+    // Execute/Assert
+    expect(() => {validatePayloadAgainstRestrictions(payload, restrictions); }).to.throw();
+  });
+  it('will throw if the payload doesnt contain restricted keys', () => {
+    // Prepare
+    const payload = {
+      Title : 'Something',
+      SomeReferenceId: '11111',
+    };
+    const restrictions = [
       { FieldNotInPayload: '12345' },
     ];
     // Execute/Assert
@@ -103,14 +140,19 @@ describe('service.validatePayloadAgainstRestrictions', () => {
     // Prepare
     const payload = {
       Title: 'Hello',
-      Assets: [{ Bar: 'Foo',
-        Some: 'Thing' }, { Bar: 'Too' }, { Zoo: 'Bam' }],
+      Assets: [
+        { Bar: 'Foo',Clue: 'Less', Not: 'restricted' }, 
+        { Bar: 'Too' },
+        { Zoo: 'Bam' }
+      ]
     };
 
     const restrictions = [
-      { Assets: [{ Bar: 'Foo',
-        Zoo: 'Bam',
-        Not: 'InPayload' }, { Bar: 'Too' }] },
+      { Assets: [
+        { Zoo: 'Bam' },
+        { Bar: 'Foo', Clue: 'Less' }, 
+        { Bar: 'Too' }
+      ] },
     ];
 
     // Execute/Assert
@@ -121,13 +163,17 @@ describe('service.validatePayloadAgainstRestrictions', () => {
     // Prepare
     const payload = {
       Title: 'Hello',
-      Assets: [{ Bar: 'Foo',
-        Zoo: 'Thing' }],
+      Assets: [
+        { Bar: 'Foo', Zoo: 'Thing' }
+      ],
     };
 
     const restrictions = [
-      { Assets: [{ Bar: 'Foo',
-        Zoo: 'Bam' }, { Bar: 'too' }, { Zoo: 'Tang' }] },
+      { Assets: [
+        { Bar: 'Foo', Zoo: 'Bam' }, 
+        { Bar: 'too' }, 
+        { Zoo: 'Tang' }
+      ] },
     ];
 
     // Execute/Assert
