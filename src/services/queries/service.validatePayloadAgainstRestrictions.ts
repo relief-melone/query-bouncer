@@ -18,20 +18,19 @@ const validatePayloadAgainstRestrictions = (payload: object, restrictions: objec
 
 const validatePayloadAgainstSingleRestriction = (payload: object, restriction: object): boolean => {
   return Object.keys(restriction).every(key=>
-    ((): boolean=>{
-      switch(true){
-        case restriction[key] instanceof Array: 
-          return payload[key].every(element=>{
-            if(element instanceof Object) return validatePayloadAgainstRestrictions(element, restriction[key]);
-            else return restriction[key].includes(element);
-          });
-        case restriction[key] instanceof Object: 
-          return validatePayloadAgainstSingleRestriction(payload[key], restriction[key]);
-        default: 
-          return restriction[key]===payload[key];
-      }
-    })()
+  {
+    switch(true){
+      case restriction[key] instanceof Array: 
+        return payload[key].every(element=>{
+          if(element instanceof Object) return validatePayloadAgainstRestrictions(element, restriction[key]);
+          else return restriction[key].includes(element);
+        });
+      case restriction[key] instanceof Object: 
+        return validatePayloadAgainstSingleRestriction(payload[key], restriction[key]);
+      default: 
+        return restriction[key]===payload[key];
+    }
+  } 
   );
-
 };
 
