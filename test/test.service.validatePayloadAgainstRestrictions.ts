@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import validatePayloadAgainstRestrictions from '../src/services/queries/service.validatePayloadAgainstRestrictions';
 
-describe.only('service.validatePayloadAgainstRestrictions', () => {
+describe('service.validatePayloadAgainstRestrictions', () => {
   it('will throw if the payload does only match a combination of restrictions', () => {
     // Prepare
     const payload = {

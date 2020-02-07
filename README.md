@@ -43,14 +43,14 @@ Permissions are the basis of everything. A typical Permission to grant read acce
   "Collection": "blogposts",
   "Right": "read",
   "QueryRestriction" : {
-    "Topic" : "${FavoriteTopic}"
+    "Topic" : "${Topic}"
   }
 }
 ```
 
 #### Internal Permissions
 
-Internal Permissions work in just the same way as regular ones do. But they manage Permissions for the Query Bouncer itsself. So in many cases you might want someone to be able to assign Roles to other users without giving them your admin Token to the service. Let's assume you want to assign an admin for your BlogPosts that is able to grant other People a Role of a Blogger. But the restriction is that this admin can only grant this permission if the Topic he wants this user to be able to read matches the one assigned for him as well. Then the internal Role Assignment would look like this. Don't worry too much about the Data Field in the PayloadRestriction. It will be explained in more detail in the [RoleAssignment Section](#roleassignments)
+Internal Permissions work in just the same way as regular ones do. But they manage Permissions for the Query Bouncer itsself. So in many cases you might want someone to be able to assign Roles to other users without giving them your admin Token to the service. Let's assume you want to assign an admin for your BlogPosts that is able to grant other People a Role of a Blogger. But the restriction is that this admin can only grant this permission if the Topic he wants this user to be able to read matches the one assigned for him as well. Then the internal Role Assignment would look like this. Don't worry too much about the Data Field in the PayloadRestriction. It will be explained in more detail in the [RoleAssignment Section](#roleassignments) 
 
 ```json
 {
@@ -59,7 +59,7 @@ Internal Permissions work in just the same way as regular ones do. But they mana
   "Right": "create",
   "PayloadRestriction" : {
     "Data": {
-      "Topic": "${FavoriteTopic}"    
+      "Topic": "${Topic}"    
     }
   }
 }
@@ -94,7 +94,7 @@ look like this
   "Collection": "blogposts",
   "Right": "create",
   "PayloadRestriction" : {
-    "Topic" : "${FavoriteTopic}"
+    "Topic" : "${Topic}"
   }
 }
 ```
@@ -102,7 +102,32 @@ look like this
 You see the actual structure of the PayloadRestriction is basically the same as the query restriction. The takeaway is that the QueryRestriction
 restricts everything you get from the database. The PayloadRestriction restricts everything you put into the database. That is why the "update"
 right needs both the Payload and the QueryRestriction. As you first have to determine if you are allowed to get the document you want to change
-as well as validate the information you want to put into the document.
+as well as validate the information you want to put into the document. 
+
+
+#### Combination of multiple permissions and restrictions
+Multiple permissions are combined with a logical OR, so more permissive permissions overwrite less permissive restrictions. Payload restrictions within the same permission are combined with a logical AND, so the payload or query has to match all criterias. 
+
+Given these two permissions for a user, the upper one is more permissive (by allowing writing to a topic independent of the author) and effectively overwrites the lower one.
+```json
+{
+  "Title": "writeBlogPosts",
+  "Collection": "blogposts",
+  "Right": "write",
+  "QueryRestriction" : {
+    "Topic" : "${Topic}"
+  }
+}
+{
+  "Title": "writeBlogPosts",
+  "Collection": "blogposts",
+  "Right": "write",
+  "QueryRestriction" : {
+    "Topic" : "${Topic}",
+    "Author" : "${Author}"
+  }
+}
+```
 
 ### Roles
 
@@ -134,7 +159,7 @@ Finally we want to assign those roles to users. A role assignment for the given 
   "User": "john.doe@hotmail.com",
   "Role": "DefaultUser",
   "Data": {
-    "FavoriteTopic": "Cars"
+    "Topic": "Cars"
   }
 }
 ```
@@ -158,7 +183,7 @@ an admin we could also create a second Role Assignment with that role and he wou
 #### Data
 Remember the Placeholder for the QueryRestriction we used in the Permission Section. Now we can set this individually for our John Doe. So in in this case when John Doe
 later tries to access all BlogPosts from the Database the Authenticator will adjust the Query to only return BlogPosts from the Topic Cars. Just make sure that all the 
-Placeholders used in any permissions the user has also need to have Data in here.
+Placeholders used in any permissions the user has also need to have Data in here. 
 
 ## Configuration
 

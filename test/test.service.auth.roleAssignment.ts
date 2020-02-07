@@ -7,6 +7,10 @@ import RoleAssignment from '../src/interfaces/interface.RoleAssignment';
 describe('service.auth.roleAssignment', () => {
   let internalRoleAssignment;
 
+  let getRoleAssignmentsForUser; 
+  let getRoleByTitle;
+  let getPermissions; 
+
   const correctMainConfig = {
     adminToken: 'correctAdminToken',
     userPrimaryKey: '_id'
@@ -21,8 +25,8 @@ describe('service.auth.roleAssignment', () => {
     }
   };
 
-  const correctRoleAssignmentForUser = { 
-    User: 'userThatCanCreatePermission',
+  const currentUserRoleAssignment: RoleAssignment = { 
+    User: 'userThatCanCreateRoleAssignment',
     Role: 'standard',
     Data: {
       personalCategory: '0000001',
@@ -43,7 +47,7 @@ describe('service.auth.roleAssignment', () => {
     PayloadRestriction: { 
       Data: {
         personalCategory: '${personalCategory}',
-        Collection: '${allowedCollection}'
+        allowedCollection: '${allowedCollection}'
       },
       
     } 
@@ -52,29 +56,26 @@ describe('service.auth.roleAssignment', () => {
   beforeEach(() => {
     internalRoleAssignment = sinon.stub();
     internalRoleAssignment.collection = { name: 'internal_roleAssignments' };
+
+    getRoleAssignmentsForUser=sinon.stub(); 
+    getRoleByTitle=sinon.stub();
+    getPermissions =sinon.stub();
+
   });
 
   it('it will correctly tell user can create roleAssignment if he is admin', async () => {
     // Prepare
-    const mainConfig = Object.assign({}, correctMainConfig);
-    const roleAssignment: RoleAssignment = Object.assign({},correctRoleAssignment);
-    
-    const getRoleAssignmentsForUser = sinon.stub().returns(Promise.resolve([
-      Object.assign({},correctRoleAssignmentForUser)
-    ]));
-    
-    const getRoleByTitle = sinon.stub().returns(Promise.resolve(correctRoleForUser));
-    const getPermissions = sinon.stub().returns(Promise.resolve([
-      Object.assign({},correctPermission)
-    ]));
+    getRoleAssignmentsForUser.returns([currentUserRoleAssignment]);
+    getRoleByTitle.returns(correctRoleForUser);
+    getPermissions.returns([correctPermission]);
 
     // Execute/Assert
     expect(await authRoleAssignment(
-      roleAssignment, 
+      correctRoleAssignment, 
       Right.create, 
       'correctAdminToken', 
       'userThatCanCreatePermission', 
-      mainConfig, 
+      correctMainConfig, 
       getRoleAssignmentsForUser, 
       getRoleByTitle, 
       getPermissions,
@@ -84,25 +85,18 @@ describe('service.auth.roleAssignment', () => {
 
   it('it will correctly tell user can create roleAssignment if he has the internal permission', async () => {
     // Prepare
-    const mainConfig = Object.assign({}, correctMainConfig);
-    const roleAssignment: RoleAssignment = Object.assign({},correctRoleAssignment);
      
-    const getRoleAssignmentsForUser = sinon.stub().returns(Promise.resolve([
-      Object.assign({},correctRoleAssignmentForUser)
-    ]));
+    getRoleAssignmentsForUser.returns([currentUserRoleAssignment]);
      
-    const getRoleByTitle = sinon.stub().returns(Promise.resolve(
-      Object.assign({},correctRoleForUser)));
-    const getPermissions = sinon.stub().returns(Promise.resolve([
-      Object.assign({},correctPermission)
-    ]));
+    getRoleByTitle.returns(correctRoleForUser);
+    getPermissions.returns([correctPermission]);
 
     expect(await authRoleAssignment(
-      roleAssignment, 
+      correctRoleAssignment, 
       Right.create, 
       'wrongAdminToken', 
       'userThatCanCreatePermission', 
-      mainConfig, 
+      correctMainConfig, 
       getRoleAssignmentsForUser, 
       getRoleByTitle, 
       getPermissions,
@@ -112,29 +106,22 @@ describe('service.auth.roleAssignment', () => {
 
   it('it will correctly tell user cannot create roleAssignment if the data restriction does not match', async () => {
     // Prepare
-    const mainConfig = Object.assign({}, correctMainConfig);
     const roleAssignment: RoleAssignment = Object.assign({},correctRoleAssignment, {
       Data: {
         allowedCollection: 'myCollection',
         personalCategory: 'oneThatIDontHaveAccessTo'
       }
     });     
-    const getRoleAssignmentsForUser = sinon.stub().returns(Promise.resolve([
-      Object.assign({},correctRoleAssignmentForUser)
-    ]));
-     
-    const getRoleByTitle = sinon.stub().returns(Promise.resolve(
-      Object.assign({},correctRoleForUser)));
-    const getPermissions = sinon.stub().returns(Promise.resolve([
-      Object.assign({},correctPermission)
-    ]));
+    getRoleAssignmentsForUser.returns([currentUserRoleAssignment]);
+    getRoleByTitle.returns(correctRoleForUser);
+    getPermissions.returns([correctPermission]);
 
     expect(await authRoleAssignment(
       roleAssignment, 
       Right.create, 
       'wrongAdminToken', 
       'userThatCanCreatePermission', 
-      mainConfig, 
+      correctMainConfig, 
       getRoleAssignmentsForUser, 
       getRoleByTitle, 
       getPermissions,
