@@ -1,4 +1,3 @@
-
 import IPermission from '../../interfaces/interface.Permission';
 import PermissionModel from '../../models/model.permission';
 import InternalPermissionModel from '../../models/model.internalPermission';
