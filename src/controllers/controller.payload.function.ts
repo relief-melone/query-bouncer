@@ -16,7 +16,7 @@ export default async (
   const user = (req as any).user[mainConfig.userPrimaryKey];
   const collection = req.params.Collection;
   const right = validateRight(req.params.Right);
-  const payload = req.body;
+  const payload = req.body.payload;
     
   try {
     const roleAssignments = await getRoleAssignmentsForUser(user);
