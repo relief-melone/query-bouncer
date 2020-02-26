@@ -25,8 +25,10 @@ describe('controller.payload', () => {
       params: { Right: 'create',
         Collection: 'myCollection' },
       body: {
-        Title: 'A new Blogpost',
-        CategoryId: '12345'
+        payload: {
+          Title: 'A new Blogpost',
+          CategoryId: '12345'
+        }
       }
     };
     
@@ -65,8 +67,10 @@ describe('controller.payload', () => {
       params: { Right: 'create',
         Collection: 'myCollection' },
       body: {
-        Title: 'A new Blogpost',
-        CategoryId: '111111'
+        payload: {
+          Title: 'A new Blogpost',
+          CategoryId: '111111'
+        }
       }
     };
     
