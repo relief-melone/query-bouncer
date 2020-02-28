@@ -10,6 +10,7 @@ import MainConfig from '../configs/config.main';
 import GetRoleAssignmentsForUser from '../services/queries/service.getRoleAssignmentsForUser';
 import GetRoleByTitle from '../services/queries/service.getRoleByTitle';
 import GetPermissions from '../services/queries/service.getBusinessPermissionsByTitles';
+import logger from '@/services/log/logger';
 
 export const QueryController = async (
   req: Request, 
@@ -25,24 +26,66 @@ export const QueryController = async (
   const right = validateRight(req.params.Right);
   const query = req.body;
 
-  const roleAssignments = await getRoleAssignmentsForUser(user);
-
-  const populatedPermissions = (await Promise.all(roleAssignments.map(async roleAssignment => {
-    const role = await getRoleByTitle(roleAssignment.Role);
-    if(role){
-      const permissions = await getPermissions(right, collection, role.Permissions);
-      return populatePermissionQueries(permissions, roleAssignment.Data);
-    } else {
-      return [];
-    }
-  }))).flat();
-    
-  if(populatedPermissions.length === 0){
-    return res.status(403).json(errorFactory.unauthorized('No Permission was found'));
-  } 
-  return res.status(200).json({
-    query: combinePermissionsAndQuery(query, populatedPermissions)
+  logger.debug('Controller Query - Handling Request...', {
+    user,
+    collection,
+    right,
+    query,
+    location: 'controllers/controller.query'
   });
+
+  try {
+    const roleAssignments = await getRoleAssignmentsForUser(user);
+
+    logger.debug('Controller Query - RoleAssignments', {
+      roleAssignments
+    });
+
+    const populatedPermissions = (await Promise.all(roleAssignments.map(async roleAssignment => {
+      const role = await getRoleByTitle(roleAssignment.Role);
+      if(role){
+        const permissions = await getPermissions(right, collection, role.Permissions);
+        return populatePermissionQueries(permissions, roleAssignment.Data);
+      } else {
+        return [];
+      }
+    }))).flat();
+
+    logger.debug('Controller Query - Populated Permissions', {
+      populatedPermissions,
+      location: 'controllers/controller.query'
+    });
+      
+    if(populatedPermissions.length === 0){
+      logger.verbose('Controller Query - No Permission found. Returning 403', {
+        user,
+        collection,
+        right,
+        query,
+        location: 'controllers/controller.query'
+      });
+
+      return res.status(403).json(errorFactory.unauthorized('No Permission was found'));
+    } 
+
+    logger.debug('Controller Query - Permissions ');
+
+    return res.status(200).json({
+      query: combinePermissionsAndQuery(query, populatedPermissions)
+    });
+
+  } catch (err) {
+    logger.error('Controller Query - Error', {
+      user,
+      collection,
+      right,
+      query,
+      location: 'controllers/controller.query'
+    });
+
+    return res.status(500).send('Internal Server Error');
+  }
+  
 };
 
 export default async (

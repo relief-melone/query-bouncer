@@ -1,6 +1,7 @@
 import RoleAssignmentModel from '../../models/model.roleAssignment';
 import RoleAssignment  from '../../interfaces/interface.RoleAssignment';
 import specialUsers from '../../interfaces/enum.specialUsers';
+import logger from '../log/logger';
 
 export default async (user: string | null, roleAssignmentModel=RoleAssignmentModel): Promise<Array<RoleAssignment>> => {
   try {
@@ -12,6 +13,10 @@ export default async (user: string | null, roleAssignmentModel=RoleAssignmentMod
     
     return roleAssignments.map(ra => ra.toObject()) as RoleAssignment[];
   } catch (err) {
+    logger.info('getRoleAssignmentsForUser - Error getting RoleAssignments', {
+      user,
+      location: '/services/queries/service.getRoleAssignmentsForUser'
+    });
     throw err;
   }
 };

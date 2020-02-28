@@ -23,9 +23,11 @@
     "express": "^4.17.1",
     "mongoose": "^5.7.6",
     "rm-session-populator": "^2.0.2",
-    "safe-compare": "^1.1.4"
+    "safe-compare": "^1.1.4",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
+    "@types/winston": "^2.4.4",
     "@typescript-eslint/eslint-plugin": "^2.5.0",
     "@typescript-eslint/parser": "^2.5.0",
     "chai": "^4.2.0",
