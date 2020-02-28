@@ -1,7 +1,8 @@
+import 'module-alias/register';
 import authPermission from '../src/services/middleware/service.middleware.tokenauth';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { Request } from 'express-serve-static-core';
+import { Request } from 'express';
 
 describe('service.auth.permission', () => {
   let res;
@@ -21,7 +22,8 @@ describe('service.auth.permission', () => {
     // Prepare
     const mainConfig = {
       adminToken: 'correctAdminToken',
-      userPrimaryKey: '_id'
+      userPrimaryKey: '_id',
+      logLevel: 'error'
     };
 
     const req ={ headers:{ authorization:'correctAdminToken' } } as Request;
@@ -33,7 +35,8 @@ describe('service.auth.permission', () => {
     // Prepare
     const mainConfig = {
       adminToken: 'correctAdminToken',
-      userPrimaryKey: '_id'
+      userPrimaryKey: '_id',
+      logLevel: 'error'
     };
     const req ={ headers:{ authorization:'incorrectAdminToken' } } as Request;
     await authPermission(req,res,next, mainConfig);

@@ -1,3 +1,5 @@
+import 'module-alias/register';
+
 import PayloadController from '../src/controllers/controller.payload.function';
 import sinon from 'sinon';
 import mainConfig from '../src/configs/config.main';

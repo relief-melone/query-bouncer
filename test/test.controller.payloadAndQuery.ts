@@ -1,3 +1,5 @@
+import 'module-alias/register';
+
 import { PayloadAndQueryController } from '../src/controllers/controller.payloadAndQuery';
 import sinon from 'sinon';
 import mainConfig from '../src/configs/config.main';

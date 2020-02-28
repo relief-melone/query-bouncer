@@ -1,3 +1,5 @@
+import 'module-alias/register';
+
 import { QueryController } from '../src/controllers/controller.query';
 import sinon from 'sinon';
 import mainConfig from '../src/configs/config.main';

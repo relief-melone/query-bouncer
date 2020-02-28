@@ -1,3 +1,4 @@
+import 'module-alias/register';
 import rolePermissionValidator from '../src/services/validation/service.validate.role.permission';
 import { expect } from 'chai';
 

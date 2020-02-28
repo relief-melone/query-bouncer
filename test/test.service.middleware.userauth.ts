@@ -1,3 +1,4 @@
+import 'module-alias/register';
 import userAuth from '../src/services/middleware/service.middleware.userauth';
 import sinon from 'sinon';
 import IRoleAssignment from '../src/interfaces/interface.RoleAssignment';

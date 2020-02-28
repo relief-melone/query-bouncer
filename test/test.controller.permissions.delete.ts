@@ -1,3 +1,4 @@
+import 'module-alias/register';
 
 import sinon from 'sinon';
 import errorHandler from '../src/controllers/errors/controller.errorHandler';

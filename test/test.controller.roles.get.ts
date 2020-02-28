@@ -1,3 +1,5 @@
+import 'module-alias/register';
+
 import { describe } from 'mocha';
 import getRolesController from '../src/controllers/controller.roles.get';
 import sinon from 'sinon';

@@ -1,5 +1,6 @@
-
+import 'module-alias/register';
 import sinon from 'sinon';
+
 import errorHandler from '../src/controllers/errors/controller.errorHandler';
 import deleteRolesController from '../src/controllers/controller.roles.delete';
 import Role from '../src/interfaces/interface.Role';

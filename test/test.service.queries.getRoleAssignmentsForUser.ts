@@ -1,3 +1,4 @@
+import 'module-alias/register';
 import GetRoleAssignmentsForUser from '../src/services/queries/service.getRoleAssignmentsForUser';
 import specialUsers from '../src/interfaces/enum.specialUsers';
 

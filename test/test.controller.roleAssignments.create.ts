@@ -1,5 +1,6 @@
-import sinon from 'sinon';
+import 'module-alias/register';
 
+import sinon from 'sinon';
 import createRoleAsssignmentController from '../src/controllers/controller.roleAssignment.create';
 import IRoleAssignment from '../src/interfaces/interface.RoleAssignment';
 import Role from '@/interfaces/interface.Role';

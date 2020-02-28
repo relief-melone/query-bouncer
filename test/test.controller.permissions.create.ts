@@ -1,5 +1,6 @@
-import sinon from 'sinon';
+import 'module-alias/register';
 
+import sinon from 'sinon';
 import errorHandler from '../src/controllers/errors/controller.errorHandler';
 import createPermissionController from '../src/controllers/controller.permissions.create';
 import Permission, { Right } from '../src/interfaces/interface.Permission';

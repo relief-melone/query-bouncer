@@ -1,3 +1,4 @@
+import 'module-alias/register';
 import combinePermissionsAndQuery from '../src/services/queries/service.combinePermissionsAndQuery';
 import { expect } from 'chai';
 

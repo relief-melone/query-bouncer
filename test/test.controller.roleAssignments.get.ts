@@ -1,3 +1,4 @@
+import 'module-alias/register';
 import sinon from 'sinon';
 
 import getRoleAsssignmentsController from '../src/controllers/controller.roleAssignment.get';

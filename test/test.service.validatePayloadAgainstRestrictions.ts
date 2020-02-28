@@ -1,3 +1,4 @@
+import 'module-alias/register';
 import { expect } from 'chai';
 import validatePayloadAgainstRestrictions from '../src/services/queries/service.validatePayloadAgainstRestrictions';
 

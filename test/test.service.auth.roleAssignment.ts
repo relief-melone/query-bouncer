@@ -1,3 +1,4 @@
+import 'module-alias/register';
 import authRoleAssignment from '../src/services/auth/service.auth.roleAssignment';
 import { Right } from '../src/interfaces/interface.Permission';
 import { expect } from 'chai';
@@ -13,7 +14,8 @@ describe('service.auth.roleAssignment', () => {
 
   const correctMainConfig = {
     adminToken: 'correctAdminToken',
-    userPrimaryKey: '_id'
+    userPrimaryKey: '_id',
+    logLevel: 'error'
   };
 
   const correctRoleAssignment: RoleAssignment = {

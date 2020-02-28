@@ -5,6 +5,8 @@ import cookieParser from 'cookie-parser';
 import sessionPopulate from 'rm-session-populator';
 
 
+import 'module-alias/register';
+
 import { connectToDb } from  './src/services/mongodb/service.mongodbConnector';
 import { createInternalPermissionRouter, createPermissionRouter } from './src/routes/route.permissions';
 import routeRoleAssignments from './src/routes/route.roleAssignments';

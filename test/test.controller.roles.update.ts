@@ -1,4 +1,6 @@
+import 'module-alias/register';
 import sinon from 'sinon';
+
 import updateRoleController from '../src/controllers/controller.roles.update';
 import IRole from '../src/interfaces/interface.Role';
 import Permission, { Right } from '../src/interfaces/interface.Permission';

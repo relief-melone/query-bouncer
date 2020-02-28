@@ -1,3 +1,4 @@
+import 'module-alias/register';
 import routeFunction from '../src/routes/route.main.function';
 import sinon from 'sinon';
 import { expect } from 'chai';

@@ -1,3 +1,4 @@
+import 'module-alias/register';
 import populateRestriction from '../src/services/service.populateRestriction';
 
 import { expect } from 'chai';

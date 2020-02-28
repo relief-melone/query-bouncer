@@ -1,3 +1,5 @@
+import 'module-alias/register';
+
 import { describe } from 'mocha';
 import getPermissions from '../src/controllers/controller.permissions.get';
 import sinon from 'sinon';

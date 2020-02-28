@@ -10,6 +10,11 @@
     "lint": "./node_modules/.bin/eslint --ignore-path .gitignore .",
     "tsc": "./node_modules/.bin/tsc"
   },
+  "_moduleAliases": {
+    "@": "./dist/src",
+    "@test": "./dist/test",
+    "@root": "./dist"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -21,6 +26,7 @@
     "@types/sinon": "^7.5.0",
     "cookie-parser": "^1.4.4",
     "express": "^4.17.1",
+    "module-alias": "^2.2.2",
     "mongoose": "^5.7.6",
     "rm-session-populator": "^2.0.2",
     "safe-compare": "^1.1.4",
