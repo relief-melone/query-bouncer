@@ -4,6 +4,7 @@ import { Right } from '../src/interfaces/interface.Permission';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import RoleAssignment from '../src/interfaces/interface.RoleAssignment';
+import ConfigMain from '@/interfaces/interface.configMain';
 
 describe('service.auth.roleAssignment', () => {
   let internalRoleAssignment;
@@ -12,10 +13,11 @@ describe('service.auth.roleAssignment', () => {
   let getRoleByTitle;
   let getPermissions; 
 
-  const correctMainConfig = {
+  const correctMainConfig: ConfigMain = {
     adminToken: 'correctAdminToken',
     userPrimaryKey: '_id',
-    logLevel: 'error'
+    logLevel: 'error',
+    supressLogging: true
   };
 
   const correctRoleAssignment: RoleAssignment = {
