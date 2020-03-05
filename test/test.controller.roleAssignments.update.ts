@@ -4,6 +4,8 @@ import updateRoleAsssignmentController from '../src/controllers/controller.roleA
 import IRoleAssignment from '../src/interfaces/interface.RoleAssignment';
 import Role from '../src/interfaces/interface.Role';
 import errorHandler from '../src/controllers/errors/controller.errorHandler';
+import MainConfig from '../src/configs/config.main';
+import main from 'rm-session-populator';
 
 describe('controller.roleAssignments.update', () => {
   let res;
@@ -11,11 +13,12 @@ describe('controller.roleAssignments.update', () => {
   let updateRoleAssignment;
   let getRoleByTitle;
 
-  const createdRoleAssignment: IRoleAssignment = {
-    User: 'some_user',
+  const roleAssignmentToUpdate: IRoleAssignment = {
+    User: 'Some_User',
     Role: 'someRole',
     Data: {}
   };
+
 
   const foundRole: Promise<Role> = Promise.resolve({
     _id: '12345',
@@ -33,16 +36,52 @@ describe('controller.roleAssignments.update', () => {
     next = sinon.stub();
     updateRoleAssignment = sinon.stub();
     getRoleByTitle = sinon.stub();
+
+  });
+  
+  it('will update roleAssignment', async () => {
+    // Prepare
+    MainConfig.userPrimaryKey;
+    const nonLowerCasingMainConfig ={ adminToken:'123', forceUserToLowerCase:false, userPrimaryKey:'123' };
+    const originalRoleAssignment = Object.assign({}, roleAssignmentToUpdate);
+    const req = {
+      params:{ id:'123' },
+      body:  roleAssignmentToUpdate
+    };
+    getRoleByTitle.returns(foundRole);
+    updateRoleAssignment.returns(roleAssignmentToUpdate);
+
+    // Execute
+    await updateRoleAsssignmentController(
+      req as any, 
+      res, 
+      next, 
+      errorHandler, 
+      updateRoleAssignment, 
+      getRoleByTitle,  
+      nonLowerCasingMainConfig
+    );
+    
+    // Assert
+    sinon.assert.calledWith(updateRoleAssignment, req.params.id, originalRoleAssignment);
+    sinon.assert.calledWith(res.status,200);
+    sinon.assert.calledWith(res.json, originalRoleAssignment);
   });
 
-  it('will create roleAssignment', async () => {
+  it('will change username to lowercase', async () => {
     // Prepare
     const req = {
       params:{ id:'123' },
-      body:  createdRoleAssignment
+      body:  roleAssignmentToUpdate
     };
     getRoleByTitle.returns(foundRole);
-    updateRoleAssignment.returns(createdRoleAssignment);
+    const lowerCasedRoleAssignment: IRoleAssignment = {
+      User: 'some_user',
+      Role: 'someRole',
+      Data: {}
+    };
+    updateRoleAssignment.returns(lowerCasedRoleAssignment);
+
 
     // Execute
     await updateRoleAsssignmentController(
@@ -53,19 +92,16 @@ describe('controller.roleAssignments.update', () => {
       updateRoleAssignment, 
       getRoleByTitle,  
     );
-
-    // Assert
-    sinon.assert.calledWith(updateRoleAssignment, req.params.id, createdRoleAssignment);
+    sinon.assert.calledWith(updateRoleAssignment, req.params.id,lowerCasedRoleAssignment);
     sinon.assert.calledWith(res.status,200);
-    sinon.assert.calledWith(res.json, createdRoleAssignment);
+    sinon.assert.calledWith(res.json, lowerCasedRoleAssignment);
   });
-
 
   it('will return an error if the role assignment does not exist', async () => {
     // Prepare
     const req = {
       params:{ id:'123' },
-      body:  createdRoleAssignment
+      body:  roleAssignmentToUpdate
     };
     getRoleByTitle.returns(foundRole);
 
@@ -91,7 +127,7 @@ describe('controller.roleAssignments.update', () => {
     // Prepare
     const req = {
       params:{ id:'123' },
-      body:  createdRoleAssignment
+      body:  roleAssignmentToUpdate
     };
     getRoleByTitle.returns(null);
 

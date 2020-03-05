@@ -13,7 +13,8 @@ describe('service.auth.roleAssignment', () => {
 
   const correctMainConfig = {
     adminToken: 'correctAdminToken',
-    userPrimaryKey: '_id'
+    userPrimaryKey: '_id',
+    forceUserToLowerCase:true
   };
 
   const correctRoleAssignment: RoleAssignment = {

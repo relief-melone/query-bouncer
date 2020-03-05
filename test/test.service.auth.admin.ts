@@ -5,7 +5,8 @@ describe('service.auth.admin.ts', () => {
   it('will correctly tell is admin if tokens match', () => {
     const mainConfig = {
       adminToken: '12345678910',
-      userPrimaryKey: '_id'
+      userPrimaryKey: '_id',
+      forceUserToLowerCase:true
     };
 
     expect(isAdmin('12345678910', mainConfig)).to.be.true;
@@ -14,7 +15,8 @@ describe('service.auth.admin.ts', () => {
   it('will correctly tell is not admin if tokens mismatch', () => {
     const mainConfig = {
       adminToken: '00000000',
-      userPrimaryKey: '_id'
+      userPrimaryKey: '_id',
+      forceUserToLowerCase:true
     };
 
     expect(isAdmin('12345678910', mainConfig)).to.be.false;
