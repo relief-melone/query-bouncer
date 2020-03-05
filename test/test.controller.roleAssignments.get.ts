@@ -10,7 +10,7 @@ describe('controller.roleAssignments.get', () => {
   let getRoleAssignments;
 
   const roleAssignmentToGet: IRoleAssignment = {
-    User: 'some_user',
+    User: 'Some_User',
     Role: 'someRole',
     Data: {}
   };
@@ -31,14 +31,15 @@ describe('controller.roleAssignments.get', () => {
     // Prepare
     const req = { };
     getRoleAssignments.returns([roleAssignmentToGet]);
-
+    const nonLowerCasingMainConfig ={ adminToken:'123', forceUserToLowerCase:false, userPrimaryKey:'123' };
     // Execute
     await getRoleAsssignmentsController(
       req as any, 
       res, 
       next, 
       errorHandler, 
-      getRoleAssignments 
+      getRoleAssignments,
+      nonLowerCasingMainConfig
     );
 
     // Assert
@@ -50,13 +51,13 @@ describe('controller.roleAssignments.get', () => {
   it('will get roleAssignments in lowercase', async () => {
     // Prepare
     const req = { };
-    const uppercasedRoleAssignment: IRoleAssignment = {
-      User: 'Some_User',
+    const lowercasedRoleAssignment: IRoleAssignment = {
+      User: 'some_user',
       Role: 'someRole',
       Data: {}
     };
 
-    getRoleAssignments.returns([uppercasedRoleAssignment]);
+    getRoleAssignments.returns([roleAssignmentToGet]);
 
     // Execute
     await getRoleAsssignmentsController(
@@ -70,7 +71,7 @@ describe('controller.roleAssignments.get', () => {
     // Assert
     sinon.assert.calledOnce(getRoleAssignments);
     sinon.assert.calledWith(res.status,200);
-    sinon.assert.calledWith(res.json, [roleAssignmentToGet]);
+    sinon.assert.calledWith(res.json, [lowercasedRoleAssignment]);
   });
 
 

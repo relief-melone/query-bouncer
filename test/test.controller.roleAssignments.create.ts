@@ -21,11 +21,6 @@ describe('controller.roleAssignments.create', () => {
     Title: 'admin',
     Permissions: [ 'DoSomething' ]
   });
-  const nonUpperCasingMainConfig = {
-    adminToken: 'correctAdminToken',
-    userPrimaryKey: '_id',
-    forceUserToLowerCase:true
-  };
 
 
   beforeEach(() => {
@@ -42,9 +37,11 @@ describe('controller.roleAssignments.create', () => {
 
   it('will create roleAssignment', async () => {
     // Prepare
+    const originalRoleAssignment = Object.assign({}, createdRoleAssignment);
     const req = {
       body:  createdRoleAssignment
     };
+    const nonLowerCasingMainConfig = { adminToken: 'correctAdminToken', userPrimaryKey: '_id', forceUserToLowerCase:false };
     getRoleByTitle.returns(foundRole);
     createRoleAssignment.returns(createdRoleAssignment);
 
@@ -56,13 +53,13 @@ describe('controller.roleAssignments.create', () => {
       errorHandler, 
       createRoleAssignment, 
       getRoleByTitle,  
-      nonUpperCasingMainConfig
+      nonLowerCasingMainConfig
     );
 
     // Assert
-    sinon.assert.calledWith(createRoleAssignment, createdRoleAssignment);
+    sinon.assert.calledWith(createRoleAssignment, originalRoleAssignment);
     sinon.assert.calledWith(res.status,201);
-    sinon.assert.calledWith(res.json, createdRoleAssignment);
+    sinon.assert.calledWith(res.json, originalRoleAssignment);
   });
   it('will change username to lowercase', async () => {
     // Prepare
