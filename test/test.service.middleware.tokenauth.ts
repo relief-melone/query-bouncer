@@ -21,7 +21,8 @@ describe('service.auth.permission', () => {
     // Prepare
     const mainConfig = {
       adminToken: 'correctAdminToken',
-      userPrimaryKey: '_id'
+      userPrimaryKey: '_id',
+      forceUserToLowerCase:true
     };
 
     const req ={ headers:{ authorization:'correctAdminToken' } } as Request;
@@ -33,7 +34,8 @@ describe('service.auth.permission', () => {
     // Prepare
     const mainConfig = {
       adminToken: 'correctAdminToken',
-      userPrimaryKey: '_id'
+      userPrimaryKey: '_id',
+      forceUserToLowerCase:true
     };
     const req ={ headers:{ authorization:'incorrectAdminToken' } } as Request;
     await authPermission(req,res,next, mainConfig);

@@ -1,5 +1,4 @@
 import sinon from 'sinon';
-
 import createRoleAsssignmentController from '../src/controllers/controller.roleAssignment.create';
 import IRoleAssignment from '../src/interfaces/interface.RoleAssignment';
 import Role from '@/interfaces/interface.Role';
@@ -12,7 +11,7 @@ describe('controller.roleAssignments.create', () => {
   let getRoleByTitle;
 
   const createdRoleAssignment: IRoleAssignment = {
-    User: 'some_user',
+    User: 'Some_User',
     Role: 'someRole',
     Data: {}
   };
@@ -22,6 +21,12 @@ describe('controller.roleAssignments.create', () => {
     Title: 'admin',
     Permissions: [ 'DoSomething' ]
   });
+  const nonUpperCasingMainConfig = {
+    adminToken: 'correctAdminToken',
+    userPrimaryKey: '_id',
+    forceUserToLowerCase:true
+  };
+
 
   beforeEach(() => {
     res = sinon.stub({        
@@ -51,6 +56,7 @@ describe('controller.roleAssignments.create', () => {
       errorHandler, 
       createRoleAssignment, 
       getRoleByTitle,  
+      nonUpperCasingMainConfig
     );
 
     // Assert
@@ -58,7 +64,35 @@ describe('controller.roleAssignments.create', () => {
     sinon.assert.calledWith(res.status,201);
     sinon.assert.calledWith(res.json, createdRoleAssignment);
   });
+  it('will change username to lowercase', async () => {
+    // Prepare
+    const req = {
+      body:  createdRoleAssignment
+    };
+    getRoleByTitle.returns(foundRole);
+    const lowerCasedRoleAssignment: IRoleAssignment = {
+      User: 'some_user',
+      Role: 'someRole',
+      Data: {}
+    };
+    createRoleAssignment.returns(lowerCasedRoleAssignment);
 
+
+    // Execute
+    await createRoleAsssignmentController(
+      req as any, 
+      res, 
+      next, 
+      errorHandler, 
+      createRoleAssignment, 
+      getRoleByTitle,  
+    );
+
+    // Assert
+    sinon.assert.calledWith(createRoleAssignment, lowerCasedRoleAssignment);
+    sinon.assert.calledWith(res.status,201);
+    sinon.assert.calledWith(res.json, lowerCasedRoleAssignment);
+  });
 
   it('will return an error if the desired role does not exist', async () => {
     // Prepare
