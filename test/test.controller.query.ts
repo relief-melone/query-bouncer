@@ -19,6 +19,7 @@ describe('controller.query', () => {
     // Prepare
     const req: any = {
       user : { _id: 'someUser' },
+      body : { query: {} },
       params: { Right: 'read',
         Collection: 'myCollection' }
     };
@@ -46,6 +47,7 @@ describe('controller.query', () => {
     // Prepare
     const req: any = {
       user : { _id: 'someUser' },
+      body : { query: {} },
       params: { Right: 'read',
         Collection: 'myCollection' }
     };
