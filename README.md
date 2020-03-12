@@ -231,7 +231,7 @@ Username for MongoDB
 Password for your user
 
 
-## API
+## API - Managing Query Bouncer
 
 ### Create New Permission
 Create a new Permission. See [Permissions](#Permissions) for details.
@@ -591,6 +591,124 @@ Delete an existing Role Assignment
 }
 ```
 
+## API - Checking your Payload/Query
+
+If you are using mongoose we suggest the according plugin. However if you have a more specific usecase or are using a different framework you can also make requests to Query Bouncer yourself.
+E.g. given if Query Bouncer is set up like described in the previous chapter you can check if a user may upload a file like this
+
+### Adjust Read Query
+**URL:** `/api/v1/blogposts/read`    
+**Method:** PUT
+**Auth required:** YES   
+**Auth Type:** Bearer Token (Cookie if InternalRoleAssignment present) 
+**Request Body Example**  
+
+```json
+{
+  "query" : {
+    "Title" : "My Favorite Food"
+  }
+}
+```
+
+#### Success Response
+**Code:** 200   
+**Success Response Body Example**  
+
+```json
+{  
+  "query": {
+    "Title" : "My Favorite Food",
+    "Category" : "Cars"
+  }  
+}
+```
+
+### Check for Permission to create a document
+To check the payload for permission use the following request. If the user may upload the file query bouncer will return 200. If not 403 will be returned
+
+**URL:** `/api/v1/blogposts/create`    
+**Method:** PUT
+**Auth required:** YES   
+**Auth Type:** Bearer Token (Cookie if InternalRoleAssignment present) 
+**Request Body Example**  
+
+```json
+{
+  "payload" : {
+    "Title" : "My Favorite Car",
+    "Category": "Cars"
+  }
+}
+```
+
+#### Success Response
+**Code:** 200   
+
+
+### Check for Permission to delete a document
+To adjust the query to delete a document use the following request. Query bouncer will return a query that matches the permissions of the user. If no permisson was found it will return 403. E.g if you would try to delete a document from blogposts and specify an id but that document would not also match the Category it is allowed to be in the query will return no documents after it has been populated and no documents will be deleted
+
+**URL:** `/api/v1/blogposts/delete`    
+**Method:** PUT
+**Auth required:** YES   
+**Auth Type:** Bearer Token (Cookie if InternalRoleAssignment present) 
+**Request Body Example**  
+
+```json
+{
+  "query" : {
+    "_id" : "SomeId"
+  }
+}
+```
+
+#### Success Response
+**Code:** 200   
+**Success Response Body Example**  
+```json
+{  
+  "query": {
+    "_id" : "SomeId",
+    "Category" : "Cars"
+  }  
+}
+```
+
+### Check for permission to update a document
+To update a document you will need both. A query that matches the document to be updated and the payload for the new document. If everything is ok you will get a payload and a query returned with a status of 200. If the payload does not match the restrictions 403 will be returned instead.
+
+**URL:** `/api/v1/blogposts/update`    
+**Method:** PUT
+**Auth required:** YES   
+**Auth Type:** Bearer Token (Cookie if InternalRoleAssignment present) 
+**Request Body Example**  
+
+```json
+{
+  "query" : {
+    "_id" : "SomeId"
+  },
+  "payload" : {
+    "Title": "Not my favorite car anymore"
+  }
+}
+```
+
+#### Success Response
+**Code:** 200   
+**Success Response Body Example**  
+```json
+{  
+  "query": {
+    "_id" : "SomeId",
+    "Category" : "Cars"
+  },
+  "payload" : {
+    "Title": "Not my favorite car anymore"
+  }
+}
+```
 
 # To Do's
 

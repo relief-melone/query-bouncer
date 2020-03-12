@@ -23,7 +23,10 @@ export const QueryController = async (
   const user: string | null = (req as any).user ? (req as any).user[mainConfig.userPrimaryKey] : null;
   const collection = req.params.Collection;
   const right = validateRight(req.params.Right);
-  const query = req.body;
+  if(!req.body.query)
+    console.log('Sending query directly in body is deprecated. Please nest in query Object');
+  
+  const query = req.body.query ? req.body.query : req.body;
 
   const roleAssignments = await getRoleAssignmentsForUser(user);
 
