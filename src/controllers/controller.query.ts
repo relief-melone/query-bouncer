@@ -24,6 +24,7 @@ export const QueryController = async (
   const collection = req.params.Collection;
   const right = validateRight(req.params.Right);
   if(!req.body.query)
+    // Remove option to pass request without query with upcoming major relase
     console.log('Sending query directly in body is deprecated. Please nest in query Object');
   
   const query = req.body.query ? req.body.query : req.body;
