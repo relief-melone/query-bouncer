@@ -7,21 +7,21 @@ import sinon from 'sinon';
 describe('service.getRoleAssignmetsForUser', () => {
   const defaultUser = 'someUser@hotmail.com';
 
-  const roleAssignmentsAnyone = {
+  const roleAssignmentAnyone = {
     User: '$anyone',
     Role: 'Guest',
     Data: {},
     toObject(): any{return this;}
   };
 
-  const roleAssignmentsAuthenticated = {
+  const roleAssignmentAuthenticated = {
     User: '$authenticated',
     Role: 'ReadBlogPosts',
     Data: {},
     toObject(): any{return this;}
   };
 
-  const roleAssignmentsUser = {
+  const roleAssignmentUser = {
     User: 'someUser@hotmail.com',
     Role: 'SpecialGuy',
     Data: {},
@@ -35,10 +35,10 @@ describe('service.getRoleAssignmetsForUser', () => {
 
   it('will return all the RoleAssignments if a user was present on call', async () => {    
     // arrange
-    roleAssignmentModel.find.onFirstCall().resolves([roleAssignmentsAnyone, roleAssignmentsAuthenticated, roleAssignmentsUser]);
+    roleAssignmentModel.find.resolves([roleAssignmentAnyone, roleAssignmentAuthenticated, roleAssignmentUser]);
 
     expect(await GetRoleAssignmentsForUser(defaultUser, roleAssignmentModel)).to.deep.equal([
-      roleAssignmentsAnyone,roleAssignmentsAuthenticated,roleAssignmentsUser
+      roleAssignmentAnyone,roleAssignmentAuthenticated,roleAssignmentUser
     ]);
 
     sinon.assert.calledOnce(roleAssignmentModel.find);
@@ -46,9 +46,9 @@ describe('service.getRoleAssignmetsForUser', () => {
   });
 
   it('will return just the RoleAssignments for anyone if no registered user was present', async () => {
-    roleAssignmentModel.find.resolves([roleAssignmentsAnyone]);
+    roleAssignmentModel.find.resolves([roleAssignmentAnyone]);
     expect(await GetRoleAssignmentsForUser(null, roleAssignmentModel)).to.deep.equal([
-      roleAssignmentsAnyone,
+      roleAssignmentAnyone,
     ]);
 
     sinon.assert.calledOnce(roleAssignmentModel.find);
@@ -57,11 +57,11 @@ describe('service.getRoleAssignmetsForUser', () => {
 
   it('will return just the RoleAssignments for anyone and authenticated if the user is known but has no role assignment', async () => {
     
-    roleAssignmentModel.find.resolves([roleAssignmentsAnyone, roleAssignmentsAuthenticated]);
+    roleAssignmentModel.find.resolves([roleAssignmentAnyone, roleAssignmentAuthenticated]);
     const user = 'hansPeter@outlook.de';
     expect(await GetRoleAssignmentsForUser(user, roleAssignmentModel)).to.deep.equal([
-      roleAssignmentsAnyone,
-      roleAssignmentsAuthenticated,
+      roleAssignmentAnyone,
+      roleAssignmentAuthenticated,
     ]);    
 
     sinon.assert.calledOnce(roleAssignmentModel.find);

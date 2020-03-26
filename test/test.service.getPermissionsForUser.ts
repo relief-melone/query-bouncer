@@ -2,7 +2,7 @@ import GetPopulatedPermissionsForCurrentUser from '../src/services/queries/servi
 import Permission, { Right } from '../src/interfaces/interface.Permission';
 import sinon from 'sinon';
 import chai,{ expect } from 'chai';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import chaiExclude from 'chai-exclude';
 
 chai.use(chaiExclude);
