@@ -358,6 +358,41 @@ Delete a Permission
 }
 ```
 
+### Get My Permissions
+Get all Permissions of the currently authenticated user currently available. The permissions will be populated, so Data from the RoleAssignments is already replaced in the restrictions.  
+
+**URL:**   
+`/api/admin/permissions/myPermissions`   
+`/api/admin/internalPermissions/myPermissions`   
+**Method:** GET   
+**Auth required:** YES   
+**Auth Type:** Bearer Token with JWT 
+
+#### Success Response
+**Code:** 200   
+**Content Example**   
+In this example the current user has two RoleAssignments. Both grant the right to read blogposts but one is for the Category Cars, the other for Food. So two permissions are returned and the query restriction is populated with the two values.
+
+```json
+[{
+  "_id": "5b637ee00000000000000000",
+  "Title": "ReadBlogPosts",
+  "Collection": "blogposts",
+  "Right": "read",
+  "QueryRestriction" : {"Category": "Cars"},
+  "PayloadRestriction": {}
+},
+{
+  "_id": "5b637ee00000000000000000",
+  "Title": "ReadBlogPosts",
+  "Collection": "blogposts",
+  "Right": "read",
+  "QueryRestriction" : {"Category": "Food"},
+  "PayloadRestriction": {}
+}
+]
+```
+
 ### Create Role
 Create a new Role
 
@@ -589,6 +624,37 @@ Delete an existing Role Assignment
     "FavoriteTopic": "Cars"
   }
 }
+```
+
+### Get Role Assignments for current User
+Get all Role Assignments for the currently logged in user
+
+**URL:** `/api/admin/roleAssignments/myRoleAssignments`    
+**Method:** GET     
+**Auth required:** YES   
+**Auth Type:** Bearer Token (Cookie if InternalRoleAssignment present) 
+
+#### Success Response
+**Code:** 200  
+**Success Response Body Example**  
+
+```json
+[{  
+  "_id": "5b637ee00000000000000000",   
+  "User": "john.doe@hotmail.com",
+  "Role": "FoodBlogger",
+  "Data": {
+    "FavoriteTopic": "Food"
+  }
+},
+{  
+  "_id": "5b637ee00000000000000001",   
+  "User": "john.doe@hotmail.com",
+  "Role": "FoodBlogger",
+  "Data": {
+    "FavoriteTopic": "Car"
+  }
+}]
 ```
 
 ## API - Checking your Payload/Query

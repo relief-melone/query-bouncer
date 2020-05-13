@@ -14,5 +14,6 @@ router.post('/', controllerCreate);
 router.put('/:id', controllerUpdate);
 router.get('/', controllerGet);
 router.get('/currentuser', controllerGetForCurrentUser);
+router.get('/myRoleAssignments', controllerGetForCurrentUser);
 router.delete('/:id', controllerDelete);
 export default router;
