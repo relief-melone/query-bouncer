@@ -8,7 +8,7 @@ describe('controller.roles.update', () => {
   let next;
   let errorHandler;
   let updateRole;
-  let permissionModel;
+  let getPermissionsByTitle;
 
   const updatedRole: IRole = {
     Title: 'BlogReader',
@@ -34,25 +34,23 @@ describe('controller.roles.update', () => {
     res.status.returns(res);
     next = function(): any{return this;};
     updateRole = sinon.stub();
-    permissionModel = sinon.stub({
-      findById(){}
-    });
+    getPermissionsByTitle = sinon.stub();
   });
 
   it('will create role for an admin', async () => {
     // Prepare
     updateRole.returns(updatedRole);
-    permissionModel.findById.returns(foundPermission);
+    getPermissionsByTitle.returns(foundPermission);
     const req = { 
       body: updatedRole,
       params:{ title:'123' }
     };
     
     // Execute
-    await updateRoleController(req as any, res, next, errorHandler, updateRole, permissionModel);
+    await updateRoleController(req as any, res, next, errorHandler, updateRole, getPermissionsByTitle);
     
     // Assert
-    sinon.assert.calledTwice(permissionModel.findById);
+    sinon.assert.calledTwice(getPermissionsByTitle);
     sinon.assert.calledOnce(res.status);
     sinon.assert.calledWith(res.status,200);
   });
@@ -62,14 +60,14 @@ describe('controller.roles.update', () => {
     // Prepare
     const mockError = new Error('Error');
     updateRole.throws(mockError);
-    permissionModel.findById.returns(foundPermission);
+    getPermissionsByTitle.returns(foundPermission);
     const req = { 
       body: updatedRole,
       params:{ title:'123' }
     };
     
     // Execute
-    await updateRoleController(req as any, res, next, errorHandler, updateRole, permissionModel);
+    await updateRoleController(req as any, res, next, errorHandler, updateRole, getPermissionsByTitle);
     
     // Assert
     sinon.assert.calledWith(res.status, 500);
@@ -78,14 +76,14 @@ describe('controller.roles.update', () => {
   it('will call the errorHandler if at least one Permission cannot be found', async () => {
     // Prepare
     updateRole.returns(updatedRole);
-    permissionModel.findById.returns(null);
+    getPermissionsByTitle.returns(null);
     const req = { 
       body: updatedRole,
       params:{ title:'123' }
     };
     
     // Execute
-    await updateRoleController(req as any, res, next, errorHandler, updateRole, permissionModel);
+    await updateRoleController(req as any, res, next, errorHandler, updateRole, getPermissionsByTitle);
     
     // Assert
     sinon.assert.calledWith(res.status, 400);
