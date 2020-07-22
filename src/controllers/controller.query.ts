@@ -31,7 +31,7 @@ export const QueryController = async (
 
   const roleAssignments = await getRoleAssignmentsForUser(user);
 
-  const populatedPermissions = (await Promise.all(roleAssignments.map(async roleAssignment => {
+  const populatedPermissions: any[] = (await Promise.all(roleAssignments.map(async roleAssignment => {
     const role = await getRoleByTitle(roleAssignment.Role);
     if(role){
       const permissions = await getPermissions(right, collection, role.Permissions);
