@@ -3,7 +3,7 @@ import sinon, { SinonStub } from 'sinon';
 import IRoleAssignment from '../src/interfaces/interface.RoleAssignment';
 import { Right } from '../src/interfaces/interface.Permission';
 
-describe.only('user auth middleware',()=>{
+describe('user auth middleware',()=>{
   let res;
   let next;
   let req;
