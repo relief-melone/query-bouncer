@@ -11,5 +11,8 @@ export default interface Permission {
 }
 
 export enum Right {
-  'read', 'update', 'create', 'delete'
+  'read'='read', 
+  'update'='update',
+  'create'='create', 
+  'delete'='delete'
 }
