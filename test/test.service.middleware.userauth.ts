@@ -1,5 +1,5 @@
 import userAuth from '../src/services/middleware/service.middleware.userauth';
-import sinon from 'sinon';
+import sinon, { SinonStub } from 'sinon';
 import IRoleAssignment from '../src/interfaces/interface.RoleAssignment';
 import { Right } from '../src/interfaces/interface.Permission';
 
@@ -8,11 +8,18 @@ describe('user auth middleware',()=>{
   let next;
   let req;
   let mainConfig;
-  let authRoleAssignment;
+  let authRoleAssignment: SinonStub;
+  let getRoleAssignmentById: SinonStub;
 
   const createdRoleAssignment: IRoleAssignment = {
-    User: 'some_user',
+    User: 'someUser',
     Role: 'someRole',
+    Data: {}
+  };
+
+  const roleAssignmentToDelete: IRoleAssignment = {
+    User: 'someOtheruser',
+    Role: 'someOtherRole',
     Data: {}
   };
 
@@ -29,6 +36,7 @@ describe('user auth middleware',()=>{
       userPrimaryKey: '_id'
     };
     authRoleAssignment = sinon.stub();
+    getRoleAssignmentById = sinon.stub();
   });
 
   it('should call next on authorized users',async ()=>{
@@ -41,7 +49,7 @@ describe('user auth middleware',()=>{
     };
     authRoleAssignment.returns(true);
 
-    await userAuth(req, res, next, mainConfig, authRoleAssignment); 
+    await userAuth(mainConfig, authRoleAssignment)(req, res, next ); 
     sinon.assert.calledOnce(next);
     sinon.assert.calledWith(authRoleAssignment, createdRoleAssignment, Right.create, req.headers.authorization, req.user._id);
 
@@ -53,15 +61,31 @@ describe('user auth middleware',()=>{
       user: { _id: 'i may not pass' },
       headers: { authorization: 'Bearer whoever' },
       body:  createdRoleAssignment,
-      method:'DELETE'
+      method:'POST'
     };
     authRoleAssignment.returns(false);
 
-    await userAuth(req, res, next, mainConfig, authRoleAssignment); 
+    await userAuth(mainConfig, authRoleAssignment)(req, res, next ); 
     sinon.assert.notCalled(next);
     sinon.assert.calledWith(res.status, 403);
-    sinon.assert.calledWith(authRoleAssignment, createdRoleAssignment, Right.delete, req.headers.authorization, req.user._id);
+    sinon.assert.calledWith(authRoleAssignment, createdRoleAssignment, Right.create, req.headers.authorization, req.user._id);
 
+  });
+
+
+  it('should get roleAssignment from DB on delete', async ()=> {
+    req = {
+      user: { _id: '123455' },
+      headers: { authorization: 'Bearer iAmAdmin' },
+      path:'12334',
+      body:  createdRoleAssignment,
+      method:'DELETE'
+    };
+    getRoleAssignmentById.resolves(roleAssignmentToDelete);
+    authRoleAssignment.returns(true);
+    await userAuth(mainConfig, authRoleAssignment, getRoleAssignmentById)(req, res, next ); 
+    sinon.assert.calledOnce(next);
+    sinon.assert.calledWith(authRoleAssignment, roleAssignmentToDelete, Right.delete, req.headers.authorization, req.user._id);
   });
 
   const methodConversionTestCases = [
@@ -80,12 +104,15 @@ describe('user auth middleware',()=>{
       req = {
         user: { _id: '123455' },
         headers: { authorization: 'Bearer iAmAdmin' },
+        path:'12334',
         body:  createdRoleAssignment,
         method:test.args
       };
+      getRoleAssignmentById.resolves(createdRoleAssignment);
       authRoleAssignment.returns(true);
+      
+      await userAuth(mainConfig, authRoleAssignment, getRoleAssignmentById)(req, res, next ); 
 
-      await userAuth(req, res, next, mainConfig, authRoleAssignment); 
       sinon.assert.calledOnce(next);
       sinon.assert.calledWith(authRoleAssignment, createdRoleAssignment, test.expected, req.headers.authorization, req.user._id);
     });

@@ -1,6 +1,6 @@
 {
   "name": "query-bouncer",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "",
   "main": "./dist/index.js",
   "scripts": {
@@ -13,34 +13,35 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/chai": "^4.2.4",
-    "@types/express": "^4.17.0",
+    "@types/chai": "^4.2.11",
+    "@types/express": "^4.17.7",
     "@types/mocha": "^5.2.7",
-    "@types/mongoose": "^5.5.23",
-    "@types/node": "^12.11.6",
-    "@types/sinon": "^7.5.0",
-    "cookie-parser": "^1.4.4",
+    "@types/mongoose": "^5.7.32",
+    "@types/node": "^12.12.51",
+    "@types/sinon": "^7.5.2",
+    "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
-    "mongoose": "^5.7.6",
-    "rm-session-populator": "^2.0.2",
-    "safe-compare": "^1.1.4"
+    "mongoose": "^5.9.25",
+    "rm-session-populator": "^2.1.0",
+    "safe-compare": "^1.1.4",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.149",
-    "@typescript-eslint/eslint-plugin": "^2.5.0",
-    "@typescript-eslint/parser": "^2.5.0",
+    "@types/lodash": "^4.14.158",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
     "chai": "^4.2.0",
     "chai-exclude": "^1.0.12",
     "chai-files": "^1.4.0",
     "eslint": "^6.5.1",
     "eslint-import-resolver-alias": "^1.1.2",
-    "eslint-plugin-import": "^2.19.1",
-    "mocha": "^5.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "mocha": "^8.0.1",
     "nyc": "^14.1.1",
     "sinon": "^7.5.0",
     "superagent": "^4.1.0",
     "supertest": "^3.4.2",
     "tslint": "^5.18.0",
-    "typescript": "^3.6.4"
+    "typescript": "^3.9.7"
   }
 }
