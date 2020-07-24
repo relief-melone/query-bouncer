@@ -12,13 +12,13 @@ describe('user auth middleware',()=>{
   let getRoleAssignmentById: SinonStub;
 
   const createdRoleAssignment: IRoleAssignment = {
-    User: 'some_user',
+    User: 'someUser',
     Role: 'someRole',
     Data: {}
   };
 
   const roleAssignmentToDelete: IRoleAssignment = {
-    User: 'some_Otheruser',
+    User: 'someOtheruser',
     Role: 'someOtherRole',
     Data: {}
   };
@@ -49,7 +49,7 @@ describe('user auth middleware',()=>{
     };
     authRoleAssignment.returns(true);
 
-    await userAuth(req, res, next, mainConfig, authRoleAssignment); 
+    await userAuth(mainConfig, authRoleAssignment)(req, res, next ); 
     sinon.assert.calledOnce(next);
     sinon.assert.calledWith(authRoleAssignment, createdRoleAssignment, Right.create, req.headers.authorization, req.user._id);
 
@@ -65,7 +65,7 @@ describe('user auth middleware',()=>{
     };
     authRoleAssignment.returns(false);
 
-    await userAuth(req, res, next, mainConfig, authRoleAssignment); 
+    await userAuth(mainConfig, authRoleAssignment)(req, res, next ); 
     sinon.assert.notCalled(next);
     sinon.assert.calledWith(res.status, 403);
     sinon.assert.calledWith(authRoleAssignment, createdRoleAssignment, Right.create, req.headers.authorization, req.user._id);
@@ -83,8 +83,7 @@ describe('user auth middleware',()=>{
     };
     getRoleAssignmentById.resolves(roleAssignmentToDelete);
     authRoleAssignment.returns(true);
-
-    await userAuth(req, res, next, mainConfig, authRoleAssignment,getRoleAssignmentById); 
+    await userAuth(mainConfig, authRoleAssignment, getRoleAssignmentById)(req, res, next ); 
     sinon.assert.calledOnce(next);
     sinon.assert.calledWith(authRoleAssignment, roleAssignmentToDelete, Right.delete, req.headers.authorization, req.user._id);
   });
@@ -111,8 +110,9 @@ describe('user auth middleware',()=>{
       };
       getRoleAssignmentById.resolves(createdRoleAssignment);
       authRoleAssignment.returns(true);
+      
+      await userAuth(mainConfig, authRoleAssignment, getRoleAssignmentById)(req, res, next ); 
 
-      await userAuth(req, res, next, mainConfig, authRoleAssignment,getRoleAssignmentById); 
       sinon.assert.calledOnce(next);
       sinon.assert.calledWith(authRoleAssignment, createdRoleAssignment, test.expected, req.headers.authorization, req.user._id);
     });

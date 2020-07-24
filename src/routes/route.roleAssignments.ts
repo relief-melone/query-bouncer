@@ -8,7 +8,7 @@ import userAuth from '../services/middleware/service.middleware.userauth';
 
 const router = express.Router();
 
-router.use(userAuth);
+router.use(userAuth());
 
 router.post('/', controllerCreate);
 router.put('/:id', controllerUpdate);

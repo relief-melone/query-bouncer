@@ -1,6 +1,6 @@
 {
   "name": "query-bouncer",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "",
   "main": "./dist/index.js",
   "scripts": {
@@ -23,7 +23,8 @@
     "express": "^4.17.1",
     "mongoose": "^5.9.25",
     "rm-session-populator": "^2.1.0",
-    "safe-compare": "^1.1.4"
+    "safe-compare": "^1.1.4",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.158",
