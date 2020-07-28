@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import ErrorHandler from './errors/controller.errorHandler';
-import GetRoleAssignment from '../services/internal/service.roleAssignments.get';
+import GetRoleAssignments from '../services/internal/service.roleAssignments.get';
 import ConfigMain from '../configs/config.main';
 
 export default async (
@@ -8,11 +8,11 @@ export default async (
   res: Response, 
   next: NextFunction, 
   errorHandler= ErrorHandler,
-  getRoleAssignment = GetRoleAssignment,
+  getRoleAssignments = GetRoleAssignments,
   configMain = ConfigMain
 ): Promise<Response> => {
   try {
-    const roleAssignments = await getRoleAssignment();
+    const roleAssignments = await getRoleAssignments();
     if(configMain.forceUserToLowerCase){
       roleAssignments.forEach(ra=>ra.User = ra.User.toLowerCase());
     }

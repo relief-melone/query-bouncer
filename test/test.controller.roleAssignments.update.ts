@@ -46,7 +46,7 @@ describe('controller.roleAssignments.update', () => {
     const originalRoleAssignment = Object.assign({}, roleAssignmentToUpdate);
     const req = {
       params:{ id:'123' },
-      body:  roleAssignmentToUpdate
+      roleAssignment:  roleAssignmentToUpdate
     };
     getRoleByTitle.returns(foundRole);
     updateRoleAssignment.returns(roleAssignmentToUpdate);
@@ -72,7 +72,7 @@ describe('controller.roleAssignments.update', () => {
     // Prepare
     const req = {
       params:{ id:'123' },
-      body:  roleAssignmentToUpdate
+      roleAssignment:  roleAssignmentToUpdate
     };
     getRoleByTitle.returns(foundRole);
     const lowerCasedRoleAssignment: IRoleAssignment = {
@@ -101,7 +101,7 @@ describe('controller.roleAssignments.update', () => {
     // Prepare
     const req = {
       params:{ id:'123' },
-      body:  roleAssignmentToUpdate
+      roleAssignment:  roleAssignmentToUpdate
     };
     getRoleByTitle.returns(foundRole);
 
@@ -127,7 +127,7 @@ describe('controller.roleAssignments.update', () => {
     // Prepare
     const req = {
       params:{ id:'123' },
-      body:  roleAssignmentToUpdate
+      roleAssignment:  roleAssignmentToUpdate
     };
     getRoleByTitle.returns(null);
 

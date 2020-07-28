@@ -39,7 +39,7 @@ describe('controller.roleAssignments.create', () => {
     // Prepare
     const originalRoleAssignment = Object.assign({}, createdRoleAssignment);
     const req = {
-      body:  createdRoleAssignment
+      roleAssignment:  createdRoleAssignment
     };
     const nonLowerCasingMainConfig = { adminToken: 'correctAdminToken', userPrimaryKey: '_id', forceUserToLowerCase:false };
     getRoleByTitle.returns(foundRole);
@@ -64,13 +64,13 @@ describe('controller.roleAssignments.create', () => {
   it('will change username to lowercase', async () => {
     // Prepare
     const req = {
-      body:  createdRoleAssignment
+      roleAssignment:  createdRoleAssignment
     };
     getRoleByTitle.returns(foundRole);
     const lowerCasedRoleAssignment: IRoleAssignment = {
       User: 'some_user',
       Role: 'someRole',
-      Data: {}
+      Data: { }
     };
     createRoleAssignment.returns(lowerCasedRoleAssignment);
 
@@ -94,7 +94,7 @@ describe('controller.roleAssignments.create', () => {
   it('will return an error if the desired role does not exist', async () => {
     // Prepare
     const req = {
-      body:  createdRoleAssignment
+      roleAssignment:  createdRoleAssignment
     };
     getRoleByTitle.returns(null);
 
