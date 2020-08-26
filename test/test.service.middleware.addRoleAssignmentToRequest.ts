@@ -38,6 +38,7 @@ describe('add role assignment middleware',()=>{
 
 
   it('should get roleAssignment from DB on delete', async ()=> {
+    // arrange
     req = {
       user: { _id: '123455' },
       headers: { authorization: 'Bearer iAmAdmin' },
@@ -46,10 +47,12 @@ describe('add role assignment middleware',()=>{
     };
     getRoleAssignmentById.resolves(roleAssignmentToDelete);
 
+    // act
     await addRoleAssignmentToRequest(getRoleAssignmentById)(req, res, next ); 
+    
+    // assert
     sinon.assert.calledOnce(next);
     expect(req.roleAssignment).to.be.eq(roleAssignmentToDelete);
-
   });
 
 
@@ -61,6 +64,7 @@ describe('add role assignment middleware',()=>{
 
   methodConversionTestCases.forEach((test)=> {
     it(`should get roleassginment from body on http ${test.args}`, async ()=> {
+      // arrange
       req = {
         user: { _id: '123455' },
         headers: { authorization: 'Bearer iAmAdmin' },
@@ -69,8 +73,10 @@ describe('add role assignment middleware',()=>{
         method:test.args
       };
 
+      // act
       await addRoleAssignmentToRequest(getRoleAssignmentById)(req, res, next ); 
 
+      // assert
       sinon.assert.calledOnce(next);
       sinon.assert.notCalled(getRoleAssignmentById);
       expect(req.roleAssignment).to.be.eq(createdRoleAssignment);

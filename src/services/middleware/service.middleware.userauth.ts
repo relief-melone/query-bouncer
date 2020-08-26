@@ -4,6 +4,7 @@ import ConfigMain from '../../configs/config.main';
 import errorHandler from '../../controllers/errors/controller.errorHandler';
 import AuthRoleAssignment from '../auth/service.auth.roleAssignment';
 import  { Right }  from '../../interfaces/interface.Permission';
+import logger from '../services.logger';
 
 
 export default (configMain = ConfigMain, 
@@ -20,6 +21,7 @@ export default (configMain = ConfigMain,
   const roleAssignment = req.roleAssignment;
 
   if(!await authRoleAssignment(roleAssignment, right, token, userid)){
+    logger.info(`Access denied! User ${userid} tried to ${right} role ${roleAssignment.Role} for user ${roleAssignment.User}`,{ userid,right,roleAssignment });
     errorHandler(errorFactory.unauthorized('Invalid Authorization information!'), res);
   }else{
     next();
