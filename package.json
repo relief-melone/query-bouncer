@@ -38,7 +38,7 @@
     "eslint": "^6.5.1",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-import": "^2.22.0",
-    "mocha": "^8.0.1",
+    "mocha": "^8.1.2",
     "nyc": "^14.1.1",
     "sinon": "^7.5.0",
     "superagent": "^4.1.0",
