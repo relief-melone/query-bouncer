@@ -16,7 +16,7 @@ export default async (
 ): Promise<Response> => {
   try {
     const id = req.params.id;
-    const roleAssignment = req.body;
+    const roleAssignment = req.roleAssignment;
     const role = await getRoleById(roleAssignment.Role);
     if(!role){
       return errorHandler(errorFactory.badAttributeInput('This Role does not exist!'), res);

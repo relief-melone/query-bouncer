@@ -16,7 +16,7 @@ export default async (
   configMain = ConfigMain
 ): Promise<Response> => {
   try {
-    const roleAssignment: RoleAssignment = req.body;
+    const roleAssignment: RoleAssignment = req.roleAssignment;
     const role = await getRoleById(roleAssignment.Role);
     if(!role){
       return errorHandler(errorFactory.badAttributeInput('This Role does not exist!'), res);
@@ -24,7 +24,7 @@ export default async (
     if(configMain.forceUserToLowerCase){
       roleAssignment.User = roleAssignment.User.toLowerCase();
     }
-    const createdRoleAssignment = await createRoleAssignment(roleAssignment);
+    const createdRoleAssignment = await createRoleAssignment(roleAssignment); 
     return res.status(201).json(createdRoleAssignment);
   } catch (err) {
     return errorHandler(err, res);

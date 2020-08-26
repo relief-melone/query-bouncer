@@ -9,7 +9,6 @@ describe('user auth middleware',()=>{
   let req;
   let mainConfig;
   let authRoleAssignment: SinonStub;
-  let getRoleAssignmentById: SinonStub;
 
   const createdRoleAssignment: IRoleAssignment = {
     User: 'someUser',
@@ -17,11 +16,6 @@ describe('user auth middleware',()=>{
     Data: {}
   };
 
-  const roleAssignmentToDelete: IRoleAssignment = {
-    User: 'someOtheruser',
-    Role: 'someOtherRole',
-    Data: {}
-  };
 
   beforeEach(()=>{
 
@@ -36,7 +30,6 @@ describe('user auth middleware',()=>{
       userPrimaryKey: '_id'
     };
     authRoleAssignment = sinon.stub();
-    getRoleAssignmentById = sinon.stub();
   });
 
   it('should call next on authorized users',async ()=>{
@@ -44,7 +37,7 @@ describe('user auth middleware',()=>{
     req = {
       user: { _id: '123455' },
       headers: { authorization: 'Bearer iAmAdmin' },
-      body:  createdRoleAssignment,
+      roleAssignment:  createdRoleAssignment,
       method:'POST'
     };
     authRoleAssignment.returns(true);
@@ -60,7 +53,7 @@ describe('user auth middleware',()=>{
     req = {
       user: { _id: 'i may not pass' },
       headers: { authorization: 'Bearer whoever' },
-      body:  createdRoleAssignment,
+      roleAssignment:  createdRoleAssignment,
       method:'POST'
     };
     authRoleAssignment.returns(false);
@@ -72,21 +65,6 @@ describe('user auth middleware',()=>{
 
   });
 
-
-  it('should get roleAssignment from DB on delete', async ()=> {
-    req = {
-      user: { _id: '123455' },
-      headers: { authorization: 'Bearer iAmAdmin' },
-      path:'12334',
-      body:  createdRoleAssignment,
-      method:'DELETE'
-    };
-    getRoleAssignmentById.resolves(roleAssignmentToDelete);
-    authRoleAssignment.returns(true);
-    await userAuth(mainConfig, authRoleAssignment, getRoleAssignmentById)(req, res, next ); 
-    sinon.assert.calledOnce(next);
-    sinon.assert.calledWith(authRoleAssignment, roleAssignmentToDelete, Right.delete, req.headers.authorization, req.user._id);
-  });
 
   const methodConversionTestCases = [
     { args: 'POST',
@@ -105,13 +83,13 @@ describe('user auth middleware',()=>{
         user: { _id: '123455' },
         headers: { authorization: 'Bearer iAmAdmin' },
         path:'12334',
-        body:  createdRoleAssignment,
+        roleAssignment: createdRoleAssignment,
         method:test.args
       };
-      getRoleAssignmentById.resolves(createdRoleAssignment);
+
       authRoleAssignment.returns(true);
       
-      await userAuth(mainConfig, authRoleAssignment, getRoleAssignmentById)(req, res, next ); 
+      await userAuth(mainConfig, authRoleAssignment)(req, res, next ); 
 
       sinon.assert.calledOnce(next);
       sinon.assert.calledWith(authRoleAssignment, createdRoleAssignment, test.expected, req.headers.authorization, req.user._id);
