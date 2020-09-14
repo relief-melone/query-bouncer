@@ -1,6 +1,5 @@
-import routeFunction from '../src/routes/route.main.function';
 import sinon from 'sinon';
-import { expect } from 'chai';
+import routeFunction from '../src/routes/route.main.function';
 
 describe('route.query', () => {
   let res;

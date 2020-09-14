@@ -1,8 +1,8 @@
-import ConfigMain from '../../configs/config.main';
-import { Request, Response } from 'express';
-import Logger from '../services.logger';
 import RoleAssignment from '@/interfaces/interface.RoleAssignment';
+import { Request, Response } from 'express';
 import { TokenIndexer } from 'morgan';
+import ConfigMain from '../../configs/config.main';
+import Logger from '../services.logger';
 
 export default (logger = Logger, configMain = ConfigMain)=>(
   tokens: TokenIndexer<Request, Response>,
