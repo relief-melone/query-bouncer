@@ -1,14 +1,14 @@
-import { Request, Response, NextFunction } from 'express';
-import errorFactory from '../services/error/service.errors';
-
-import ErrorHandler from './errors/controller.errorHandler';
-import CreateRole from '../services/internal/service.roles.create';
-import GetPermissionByTitle from '../services/internal/service.allPermissions.getByTitle';
+import { Request, Response } from 'express';
 import Role from '../interfaces/interface.Role';
+import errorFactory from '../services/error/service.errors';
+import GetPermissionByTitle from '../services/internal/service.allPermissions.getByTitle';
+import CreateRole from '../services/internal/service.roles.create';
+import ErrorHandler from './errors/controller.errorHandler';
+
 export default async (
   req: Request, 
   res: Response, 
-  next: NextFunction, 
+  _, 
   errorHandler= ErrorHandler,
   createRole = CreateRole,
   getPermissionByTitle = GetPermissionByTitle

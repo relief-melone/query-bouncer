@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import ErrorHandler from './errors/controller.errorHandler';
 
 export default(  getPermission, errorHandler = ErrorHandler)=>
-  async ( req: Request, res: Response ): Promise<Response> => {
+  async ( _, res: Response ): Promise<Response> => {
 
     try {
       const permissions = await getPermission();

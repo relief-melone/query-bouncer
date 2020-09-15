@@ -1,11 +1,11 @@
-import { Request, Response, NextFunction } from 'express';
-import ErrorHandler from './errors/controller.errorHandler';
+import { NextFunction, Request, Response } from 'express';
 import GetRoles from '../services/internal/service.roles.get';
+import ErrorHandler from './errors/controller.errorHandler';
 
 export default async (
-  req: Request, 
+  _req: Request, 
   res: Response, 
-  next: NextFunction, 
+  _next: NextFunction, 
   errorHandler = ErrorHandler,
   getRoles = GetRoles,
 ): Promise<Response> => {

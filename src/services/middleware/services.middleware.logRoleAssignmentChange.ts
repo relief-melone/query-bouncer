@@ -1,13 +1,11 @@
 import RoleAssignment from '@/interfaces/interface.RoleAssignment';
 import { Request, Response } from 'express';
-import { TokenIndexer } from 'morgan';
 import ConfigMain from '../../configs/config.main';
 import Logger from '../services.logger';
 
 export default (logger = Logger, configMain = ConfigMain)=>(
-  tokens: TokenIndexer<Request, Response>,
-  req: Request,
-  res: Response,
+  _,
+  req: Request
 ): null=>{
   const roleAssignment: RoleAssignment = req.roleAssignment;
   const userId = getUserId(req, configMain);

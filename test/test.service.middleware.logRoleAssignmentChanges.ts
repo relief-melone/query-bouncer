@@ -1,11 +1,10 @@
-import servicesLogUserChange,{ isGetOrNoSucess } from '../src/services/middleware/services.middleware.logRoleAssignmentChange';
-import IRoleAssignment from '../src/interfaces/interface.RoleAssignment';
-import sinon from 'sinon';
 import { expect } from 'chai';
+import sinon from 'sinon';
+import IRoleAssignment from '../src/interfaces/interface.RoleAssignment';
+import servicesLogUserChange, { isGetOrNoSucess } from '../src/services/middleware/services.middleware.logRoleAssignmentChange';
 
 describe('log role assignment changes',()=>{
   let res;
-  let next;
   let logger;
 
   const user={
@@ -21,7 +20,6 @@ describe('log role assignment changes',()=>{
   };
   beforeEach(()=>{
     res = sinon.stub();
-    next = sinon.stub();
     logger = {
       info:sinon.stub() 
     };
@@ -34,7 +32,7 @@ describe('log role assignment changes',()=>{
       method:'POST'
     } as any;
 
-    servicesLogUserChange(logger)({},req, res);
+    servicesLogUserChange(logger)({},req);
     sinon.assert.calledOnce(logger.info);
     sinon.assert.calledWith(logger.info, sinon.match.string, 
            
@@ -80,7 +78,7 @@ describe('log role assignment changes',()=>{
         method:testargs.method
       } as any;
   
-      servicesLogUserChange(logger)({},req, res);
+      servicesLogUserChange(logger)({},req);
       sinon.assert.calledOnce(logger.info);
       sinon.assert.calledWith(logger.info, testargs.expected, sinon.match.any);
     });

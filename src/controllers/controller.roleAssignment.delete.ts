@@ -1,12 +1,12 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import errorFactory from '../services/error/service.errors';
-import ErrorHandler from './errors/controller.errorHandler';
 import DeleteRoleAssignment from '../services/internal/service.roleAssignments.delete';
+import ErrorHandler from './errors/controller.errorHandler';
 
 export default async (
   req: Request, 
   res: Response, 
-  next: NextFunction, 
+  _, 
   errorHandler= ErrorHandler,
   deleteRoleAssignment = DeleteRoleAssignment,
 ): Promise<Response> => {

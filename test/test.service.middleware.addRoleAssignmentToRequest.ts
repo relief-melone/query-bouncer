@@ -1,13 +1,12 @@
-import addRoleAssignmentToRequest from '../src/services/middleware/service.middleware.addRoleAssignmentToRequest';
+import { expect } from 'chai';
 import sinon, { SinonStub } from 'sinon';
 import IRoleAssignment from '../src/interfaces/interface.RoleAssignment';
-import { expect } from 'chai';
+import addRoleAssignmentToRequest from '../src/services/middleware/service.middleware.addRoleAssignmentToRequest';
 
 describe('add role assignment middleware',()=>{
   let res;
   let next;
   let req;
-  let mainConfig;
   let getRoleAssignmentById: SinonStub;
 
   const createdRoleAssignment: IRoleAssignment = {
@@ -30,9 +29,6 @@ describe('add role assignment middleware',()=>{
     res.json.returns(res);
     res.status.returns(res);
     next = sinon.stub();
-    mainConfig = {
-      userPrimaryKey: '_id'
-    };
     getRoleAssignmentById = sinon.stub();
   });
 

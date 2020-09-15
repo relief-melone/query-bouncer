@@ -1,20 +1,17 @@
-import validateRight from '../services/validation/service.validateRight';
-
-import populatePermissionQueries from '../services/queries/service.populatePermissionQueries';
-import combinePermissionsAndQuery from '../services/queries/service.combinePermissionsAndQuery';
-
-import errorFactory from '../services/error/service.errors';
-import { Request, Response, NextFunction } from 'express';
-
+import { NextFunction, Request, Response } from 'express';
 import MainConfig from '../configs/config.main';
+import errorFactory from '../services/error/service.errors';
+import combinePermissionsAndQuery from '../services/queries/service.combinePermissionsAndQuery';
+import GetPermissions from '../services/queries/service.getBusinessPermissionsByTitles';
 import GetRoleAssignmentsForUser from '../services/queries/service.getRoleAssignmentsForUser';
 import GetRoleByTitle from '../services/queries/service.getRoleByTitle';
-import GetPermissions from '../services/queries/service.getBusinessPermissionsByTitles';
+import populatePermissionQueries from '../services/queries/service.populatePermissionQueries';
+import validateRight from '../services/validation/service.validateRight';
 
 export const QueryController = async (
   req: Request, 
   res: Response, 
-  next: NextFunction, 
+  _, 
   mainConfig, 
   getRoleAssignmentsForUser,
   getRoleByTitle,
