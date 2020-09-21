@@ -26,7 +26,7 @@ const handleNonHttpError = (err, res: Response): Response => {
       error = createError.documentNotFound({ err });
     }
     if (err.code === 11000) {
-      error = createError.validationFailed({ message: err.message });
+      error = createError.alreadyExists({ message: err.message });
     }
   }
   if (!error) {
