@@ -43,7 +43,6 @@
     "sinon": "^7.5.0",
     "superagent": "^4.1.0",
     "supertest": "^3.4.2",
-    "tslint": "^5.18.0",
     "typescript": "^3.9.7"
   }
 }
