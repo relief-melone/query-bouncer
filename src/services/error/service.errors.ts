@@ -11,6 +11,9 @@ const documentNotFound = function(Details): Err {
 const validationFailed = function(Details): Err {
   return new Err(400, 'The Validation of your data failed', Details);
 };
+const alreadyExists = function(Details): Err {
+  return new Err(409, 'Entry already exists', Details);
+};
 
 const internalServerError = function(Details): Err {
   return new Err(500, 'Internal Server Error', Details);
@@ -30,7 +33,8 @@ const createError = {
   validationFailed,
   internalServerError,
   badAttributeInput,
-  unauthorized
+  unauthorized,
+  alreadyExists
 };
 
 export default createError;

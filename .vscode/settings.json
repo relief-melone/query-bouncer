@@ -5,5 +5,6 @@
   "eslint.run": "onType",
   "editor.codeActionsOnSave": {
     "source.fixAll": true
-  }
+  },
+  "workbench.editor.enablePreviewFromQuickOpen": false
 }
