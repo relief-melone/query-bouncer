@@ -1,3 +1,4 @@
+import RoleAssignmentModel from '@/models/model.roleAssignment';
 import { Schema } from 'mongoose';
 
 const RoleAssignmentSchema = new Schema({
@@ -16,5 +17,5 @@ const RoleAssignmentSchema = new Schema({
 }, {
   minimize: false
 });
-
+RoleAssignmentSchema.index({ User:1, Role:1, Data:1 }, { unique:true });
 export default RoleAssignmentSchema;
