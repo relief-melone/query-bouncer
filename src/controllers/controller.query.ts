@@ -11,7 +11,7 @@ import validateRight from '../services/validation/service.validateRight';
 export const QueryController = async (
   req: Request, 
   res: Response, 
-  _, 
+  _: NextFunction, 
   mainConfig, 
   getRoleAssignmentsForUser,
   getRoleByTitle,

@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import ConfigMain from '../configs/config.main';
 import errorFactory from '../services/error/service.errors';
 import UpdateRoleAssignment from '../services/internal/service.roleAssignments.update';
@@ -8,7 +8,7 @@ import ErrorHandler from './errors/controller.errorHandler';
 export default async (
   req: Request, 
   res: Response, 
-  _, 
+  _: NextFunction, 
   errorHandler= ErrorHandler,
   updateRoleAssignment = UpdateRoleAssignment,
   getRoleById= GetRoleById,

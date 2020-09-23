@@ -1,12 +1,12 @@
 import RoleAssignmentById from '@/interfaces/interface.RoleAssignment';
-import { NextFunction, Request } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { Right } from '../../interfaces/interface.Permission';
 import GetRoleAssignment from '../../services/internal/service.roleAssignments.getById';
 
 
 export default (getRoleAssignmentById = GetRoleAssignment)=>async (
   req: Request, 
-  _, 
+  _: Response, 
   next: NextFunction,
 ): Promise<void>=>
 {

@@ -15,7 +15,7 @@ import validateRight from '../services/validation/service.validateRight';
 export const PayloadAndQueryController = async (
   req: Request, 
   res: Response, 
-  _, 
+  _: NextFunction, 
   mainConfig, 
   getRoleAssignmentsForUser, 
   getRoleByTitle, 

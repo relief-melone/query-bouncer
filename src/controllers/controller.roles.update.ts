@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import Role from '../interfaces/interface.Role';
 import errorFactory from '../services/error/service.errors';
 import GetPermissionByTitle from '../services/internal/service.allPermissions.getByTitle';
@@ -8,7 +8,7 @@ import ErrorHandler from './errors/controller.errorHandler';
 export default async (
   req: Request, 
   res: Response, 
-  _, 
+  _: NextFunction, 
   errorHandler= ErrorHandler,
   updateRole = UpdateRole,
   getPermissionByTitle = GetPermissionByTitle

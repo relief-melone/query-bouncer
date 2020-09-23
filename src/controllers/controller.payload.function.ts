@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import populateInputRestrictions from '../services/input/service.populateInputRestrictions';
 import validatePayloadAgainstRestrictions from '../services/queries/service.validatePayloadAgainstRestrictions';
 import validateRight from '../services/validation/service.validateRight';
@@ -6,7 +6,7 @@ import validateRight from '../services/validation/service.validateRight';
 export default async (
   req: Request, 
   res: Response, 
-  _, 
+  _: NextFunction, 
   mainConfig, 
   getRoleAssignmentsForUser, 
   getRoleByTitle, 
