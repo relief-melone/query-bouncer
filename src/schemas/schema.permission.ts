@@ -1,7 +1,5 @@
-// const SchemaVersion = '1.0.0';
-
-import mongoose from '../services/mongodb/service.mongodbConnector';
 import { Schema } from 'mongoose';
+import mongoose from '../services/mongodb/service.mongodbConnector';
 
 const PermissionSchema: Schema = new mongoose.Schema({
   Title: {

@@ -1,11 +1,9 @@
 import sinon from 'sinon';
-
-import updateRoleAsssignmentController from '../src/controllers/controller.roleAssignment.update';
-import IRoleAssignment from '../src/interfaces/interface.RoleAssignment';
-import Role from '../src/interfaces/interface.Role';
-import errorHandler from '../src/controllers/errors/controller.errorHandler';
 import MainConfig from '../src/configs/config.main';
-import main from 'rm-session-populator';
+import updateRoleAsssignmentController from '../src/controllers/controller.roleAssignment.update';
+import errorHandler from '../src/controllers/errors/controller.errorHandler';
+import Role from '../src/interfaces/interface.Role';
+import IRoleAssignment from '../src/interfaces/interface.RoleAssignment';
 
 describe('controller.roleAssignments.update', () => {
   let res;

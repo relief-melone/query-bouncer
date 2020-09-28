@@ -1,7 +1,7 @@
+import { Request } from 'express';
 import { describe } from 'mocha';
-import getRolesController from '../src/controllers/controller.roles.get';
 import sinon from 'sinon';
-import { Request  } from 'express';
+import getRolesController from '../src/controllers/controller.roles.get';
 import errorHandler from '../src/controllers/errors/controller.errorHandler';
 
 

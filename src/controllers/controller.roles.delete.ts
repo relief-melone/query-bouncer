@@ -1,12 +1,11 @@
-import { Request, Response, NextFunction } from 'express';
-import ErrorHandler from './errors/controller.errorHandler';
+import { NextFunction, Request, Response } from 'express';
 import DeleteRole from '../services/internal/service.roles.delete';
+import ErrorHandler from './errors/controller.errorHandler';
 
 export default async (
   req: Request, 
   res: Response, 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  next: NextFunction, 
+  _: NextFunction, 
   errorHandler = ErrorHandler,
   deleteRole = DeleteRole
 ): Promise<Response> =>  {

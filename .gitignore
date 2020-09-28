@@ -16,10 +16,6 @@
 temp/
 
 /.vscode/.env
-/.vscode/archive
-
-# Package-lock
-package-lock.json
 
 # Whitelist
 !.eslintrc.js

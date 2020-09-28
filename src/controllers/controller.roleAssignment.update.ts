@@ -1,14 +1,14 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
+import ConfigMain from '../configs/config.main';
 import errorFactory from '../services/error/service.errors';
-import ErrorHandler from './errors/controller.errorHandler';
 import UpdateRoleAssignment from '../services/internal/service.roleAssignments.update';
 import GetRoleById from '../services/queries/service.getRoleByTitle';
-import ConfigMain from '../configs/config.main';
+import ErrorHandler from './errors/controller.errorHandler';
 
 export default async (
   req: Request, 
   res: Response, 
-  next: NextFunction, 
+  _: NextFunction, 
   errorHandler= ErrorHandler,
   updateRoleAssignment = UpdateRoleAssignment,
   getRoleById= GetRoleById,

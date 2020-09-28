@@ -1,13 +1,13 @@
+import ConfigMain from '../../configs/config.main';
 import { Right } from '../../interfaces/interface.Permission';
 import IRoleAssignment from '../../interfaces/interface.RoleAssignment';
-import isAdmin from './service.auth.admin';
-import validatePayloadAgainstRestrictions from '../queries/service.validatePayloadAgainstRestrictions';
+import InternalRoleAssignment from '../../models/model.roleAssignment';
 import populateInputRestrictions from '../input/service.populateInputRestrictions';
+import GetInternalPermissions from '../internal/service.getInternalPermissionsBy';
 import GetRoleAssignmentsForUser from '../queries/service.getRoleAssignmentsForUser';
 import GetRoleByTitle from '../queries/service.getRoleByTitle';
-import GetInternalPermissions from '../internal/service.getInternalPermissionsBy';
-import InternalRoleAssignment from '../../models/model.roleAssignment';
-import ConfigMain from '../../configs/config.main';
+import validatePayloadAgainstRestrictions from '../queries/service.validatePayloadAgainstRestrictions';
+import isAdmin from './service.auth.admin';
 
 export default async (
   roleAssignment: IRoleAssignment, 
@@ -32,7 +32,7 @@ export default async (
           internalRoleAssignment.collection.name, 
           role.Permissions, 
         );
-        return await populateInputRestrictions(permissions, roleAssignment.Data);
+        return populateInputRestrictions(permissions, roleAssignment.Data);
       }
     }))).flat();
 

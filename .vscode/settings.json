@@ -4,7 +4,8 @@
   "editor.detectIndentation": false,
   "eslint.run": "onType",
   "editor.codeActionsOnSave": {
-    "source.fixAll": true
+    "source.fixAll": true,
+    "source.organizeImports": true
   },
   "workbench.editor.enablePreviewFromQuickOpen": false
 }

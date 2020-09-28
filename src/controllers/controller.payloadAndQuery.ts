@@ -1,21 +1,21 @@
+import { NextFunction, Request, Response } from 'express';
+import MainConfig from '../configs/config.main';
+import errorHandler from '../controllers/errors/controller.errorHandler';
+import errorFactory from '../services/error/service.errors';
 import populateInputRestrictions from '../services/input/service.populateInputRestrictions';
+import combinePermissionsAndQuery from '../services/queries/service.combinePermissionsAndQuery';
+import getPermissions from '../services/queries/service.getBusinessPermissionsByTitles';
+import getRoleAssignmentsForUser from '../services/queries/service.getRoleAssignmentsForUser';
+import getRoleByTitle from '../services/queries/service.getRoleByTitle';
 import populateQueryRestrictions from '../services/queries/service.populatePermissionQueries';
 import validatePayloadAgainstRestrictions from '../services/queries/service.validatePayloadAgainstRestrictions';
 import validateRight from '../services/validation/service.validateRight';
-import { Request, Response, NextFunction } from 'express';
-import errorFactory from '../services/error/service.errors';
-import combinePermissionsAndQuery from '../services/queries/service.combinePermissionsAndQuery';
-import MainConfig from '../configs/config.main';
-import getRoleAssignmentsForUser from '../services/queries/service.getRoleAssignmentsForUser';
-import getRoleByTitle from '../services/queries/service.getRoleByTitle';
-import getPermissions from '../services/queries/service.getBusinessPermissionsByTitles';
-import errorHandler from '../controllers/errors/controller.errorHandler';
 
 
 export const PayloadAndQueryController = async (
   req: Request, 
   res: Response, 
-  next: NextFunction, 
+  _: NextFunction, 
   mainConfig, 
   getRoleAssignmentsForUser, 
   getRoleByTitle, 

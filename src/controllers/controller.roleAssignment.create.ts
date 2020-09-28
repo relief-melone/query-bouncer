@@ -1,15 +1,15 @@
-import { Request, Response, NextFunction } from 'express';
+import RoleAssignment from '@/interfaces/interface.RoleAssignment';
+import { NextFunction, Request, Response } from 'express';
+import ConfigMain from '../configs/config.main';
 import errorFactory from '../services/error/service.errors';
-import ErrorHandler from './errors/controller.errorHandler';
 import CreateRoleAssignment from '../services/internal/service.roleAssignments.create';
 import GetRoleById from '../services/queries/service.getRoleByTitle';
-import RoleAssignment from '@/interfaces/interface.RoleAssignment';
-import ConfigMain from '../configs/config.main';
+import ErrorHandler from './errors/controller.errorHandler';
 
 export default async (
   req: Request, 
   res: Response, 
-  next: NextFunction, 
+  _: NextFunction, 
   errorHandler= ErrorHandler,
   createRoleAssignment = CreateRoleAssignment,
   getRoleById= GetRoleById,
