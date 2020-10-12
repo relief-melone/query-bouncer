@@ -5,6 +5,20 @@
   "version": "0.2.0",
   "configurations": [
     {
+      // for this to work, the port 9229 from that container has to be forwarded to localhost
+      "type": "node",
+      "request": "attach",
+      "name": "connect to docker container",
+      "address": "localhost",
+      "port": 9229,
+      "localRoot": "${workspaceFolder}/dist",
+      "remoteRoot": "/app/dist",
+      "sourceMaps": true,
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
       "type": "node",
       "request": "launch",
       "name": "Unit Tests",
@@ -32,6 +46,18 @@
         "<node_internals>/**/*.js",
         "${workspaceFolder}/node_modules/**/*.js",
       ]
-    }
+    },
+    {
+      "name": "Launch Program (WSL)",
+      "envFile": "${workspaceFolder}/.vscode/.env",
+      "runtimeExecutable": "/root/.nvm/versions/node/v14.13.1/bin/node",
+      "program": "${workspaceFolder}/dist/index.js",
+      "request": "launch",
+      "console": "integratedTerminal",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "pwa-node"
+    },
   ]
 }

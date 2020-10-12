@@ -1,13 +1,13 @@
-FROM node:12-alpine
+FROM node:12
 
 WORKDIR /app
-COPY . .
-
-RUN npm --version && node --version
+COPY . . 
 
 RUN npm install && \
-    npm run build
+    npm run build && \
+    bash ./scripts/setDevFilePermissions.sh
 
 EXPOSE 8080
+EXPOSE 9229
 
-CMD ["npm", "start"]
+ENTRYPOINT [ "/bin/bash", "./scripts/start.sh" ]

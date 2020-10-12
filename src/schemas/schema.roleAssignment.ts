@@ -1,4 +1,3 @@
-import RoleAssignmentModel from '@/models/model.roleAssignment';
 import { Schema } from 'mongoose';
 
 const RoleAssignmentSchema = new Schema({
