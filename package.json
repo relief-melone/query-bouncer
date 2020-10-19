@@ -1,12 +1,14 @@
 {
   "name": "query-bouncer",
-  "version": "2.6.3",
+  "version": "2.6.4",
   "description": "",
   "main": "./dist/index.js",
   "scripts": {
     "start": "node ./dist/index.js",
-    "test": "./node_modules/.bin/nyc mocha",
-    "build": "./node_modules/.bin/tsc --watch false",
+    "test": "./node_modules/.bin/mocha",
+    "dev": "./node_modules/.bin/tsc-watch --onSuccess \"node --inspect=9229 ./dist/index.js\"",
+    "coverage": "./node_modules/.bin/nyc npm run test",
+    "build": "./node_modules/.bin/tsc --watch false -d",
     "lint": "./node_modules/.bin/eslint --ignore-path .gitignore .",
     "tsc": "./node_modules/.bin/tsc"
   },
@@ -43,6 +45,7 @@
     "sinon": "^7.5.0",
     "superagent": "^4.1.0",
     "supertest": "^3.4.2",
+    "tsc-watch": "^4.2.9",
     "typescript": "^3.9.7"
   }
 }
