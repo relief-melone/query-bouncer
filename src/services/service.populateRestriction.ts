@@ -11,8 +11,10 @@ const populatePermission = (permissionQuery: any, data: any): any => {
   return permissionQuery;
 };
 
-const replacePlaceholder = (str: string, key: string, value: string): string => {
-  return str.replace( '${'+ key +'}',value );
+const replacePlaceholder = (unpopulated: string|boolean|number, key: string, value: string): string|boolean|number => {
+  return typeof unpopulated === 'string' 
+    ? unpopulated.replace( '${'+ key +'}',value )
+    : unpopulated;
 };
 
 export default populatePermission;

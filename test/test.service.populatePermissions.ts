@@ -1,6 +1,6 @@
-import populatePermissions from '../src/services/queries/service.populatePermissionQueries';
 import { expect } from 'chai';
 import Permission from '../src/interfaces/interface.Permission';
+import populatePermissions from '../src/services/queries/service.populatePermissionQueries';
 
 describe('service.populatePermissionQueries', () => {
     
