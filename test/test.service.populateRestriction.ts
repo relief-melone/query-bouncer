@@ -1,6 +1,6 @@
+import { expect } from 'chai';
 import populateRestriction from '../src/services/service.populateRestriction';
 
-import { expect } from 'chai';
 
 describe('service.populateRestriction.ts', () => {
   it('will correctly convert a flat query with no data parameters',() => {
@@ -48,4 +48,18 @@ describe('service.populateRestriction.ts', () => {
     const data = {};
     expect(populateRestriction(query,data)).to.deep.equal({});
   });
+
+  it('will correctly leave other primitives untouched', () => {
+    const query = {
+      NrOfSomething: 12  ,
+      AllowStuff: true  
+    };
+    const data = {};
+
+    expect(populateRestriction(query,data)).to.deep.equal({
+      NrOfSomething: 12  ,
+      AllowStuff: true  
+    });
+  });
+
 });
