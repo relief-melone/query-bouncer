@@ -1,9 +1,9 @@
 
-import { Request, Response, NextFunction } from 'express';
-import errorFactory from '../error/service.errors';
-import isAdmin from '../auth/service.auth.admin';
+import { NextFunction, Request, Response } from 'express';
 import ConfigMain from '../../configs/config.main';
 import errorHandler from '../../controllers/errors/controller.errorHandler';
+import isAdmin from '../auth/service.auth.admin';
+import errorFactory from '../error/service.errors';
 
 
 export default async (req: Request, res: Response, next: NextFunction,configMain = ConfigMain ): Promise<void>=>
