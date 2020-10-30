@@ -22,7 +22,7 @@ export const PayloadAndQueryController = async (
   getPermissions, 
   errorHandler
 ): Promise<Response> => {
-  const user = (req as any).user[mainConfig.userPrimaryKey];
+  const user = req.user ? req.user[mainConfig.userPrimaryKey] : null;
   const collection = req.params.Collection;
   const right = validateRight(req.params.Right);
   

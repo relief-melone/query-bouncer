@@ -1,7 +1,7 @@
-import authPermission from '../src/services/middleware/service.middleware.tokenauth';
 import { expect } from 'chai';
+import { Request } from 'express';
 import sinon from 'sinon';
-import { Request } from 'express-serve-static-core';
+import authPermission from '../src/services/middleware/service.middleware.tokenauth';
 
 describe('service.auth.permission', () => {
   let res;

@@ -17,7 +17,7 @@ export const QueryController = async (
   getRoleByTitle,
   getPermissions,
 ): Promise<Response> => {
-  const user: string | null = (req as any).user ? (req as any).user[mainConfig.userPrimaryKey] : null;
+  const user: string | null = req.user ? req.user[mainConfig.userPrimaryKey] : null;
   const collection = req.params.Collection;
   const right = validateRight(req.params.Right);
   if(!req.body.query)

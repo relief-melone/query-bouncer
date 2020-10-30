@@ -1,12 +1,14 @@
 {
   "name": "query-bouncer",
-  "version": "2.6.3",
+  "version": "2.7.0",
   "description": "",
   "main": "./dist/index.js",
   "scripts": {
     "start": "node ./dist/index.js",
-    "test": "./node_modules/.bin/nyc mocha",
-    "build": "./node_modules/.bin/tsc --watch false",
+    "test": "./node_modules/.bin/mocha",
+    "dev": "./node_modules/.bin/tsc-watch --onSuccess \"node --inspect=9229 ./dist/index.js\"",
+    "coverage": "./node_modules/.bin/nyc npm run test",
+    "build": "./node_modules/.bin/tsc --watch false -d",
     "lint": "./node_modules/.bin/eslint --ignore-path .gitignore .",
     "tsc": "./node_modules/.bin/tsc"
   },
@@ -19,17 +21,17 @@
     "@types/mongoose": "^5.7.32",
     "@types/node": "^12.12.62",
     "@types/sinon": "^7.5.2",
+    "@types/lodash": "^4.14.158",
+    "@types/morgan": "^1.9.1",
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "mongoose": "^5.10.6",
     "morgan": "^1.10.0",
-    "rm-session-populator": "^2.1.0",
+    "rm-session-populator": "^2.3.0",
     "safe-compare": "^1.1.4",
     "winston": "^3.3.3"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.158",
-    "@types/morgan": "^1.9.1",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
     "chai": "^4.2.0",
@@ -43,6 +45,7 @@
     "sinon": "^7.5.0",
     "superagent": "^4.1.0",
     "supertest": "^3.4.2",
+    "tsc-watch": "^4.2.9",
     "typescript": "^3.9.7"
   }
 }

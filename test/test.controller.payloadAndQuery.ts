@@ -1,6 +1,6 @@
-import { PayloadAndQueryController } from '../src/controllers/controller.payloadAndQuery';
 import sinon from 'sinon';
 import mainConfig from '../src/configs/config.main';
+import { PayloadAndQueryController } from '../src/controllers/controller.payloadAndQuery';
 import errorHandler from '../src/controllers/errors/controller.errorHandler';
 
 describe('controller.payloadAndQuery', () => {
@@ -17,11 +17,68 @@ describe('controller.payloadAndQuery', () => {
     next = function(): any{return this;};
     errorHandlerSpy = sinon.spy(errorHandler);
   });
-  
+
   it('will return 200 status and the query if payload matches the permissions, and user has access to collection', async () => {
     // Prepare
     const req: any = {
       user : { _id: 'someUser' },
+      params: { 
+        Right: 'create',
+        Collection: 'myCollection' },
+      body: {
+        payload: {
+          Title: 'A new Blogpost',
+          Area: '12345',
+          CategoryId: '00001'
+        },
+        query: {
+          Title: 'A new Blogpost',
+          Area: '12345'
+        }        
+      }
+    };
+    
+    const getRoleAssignmentsForUser = sinon.stub().returns(Promise.resolve([
+      { User: 'someUser',
+        Role: 'standard',
+        Data: { 
+          personalCategory: '00001',
+          allowedArea: '12345'
+        } 
+      }
+    ]));
+    const getRoleByTitle = sinon.stub().returns(Promise.resolve({
+      Title: 'standard',
+      Permissions: ['readBlogPost', 'createInBasicCategory']
+    }));
+    const getPermissions = sinon.stub().returns(Promise.resolve([
+      { Title: 'createInBasicCategory',
+        Collection: 'myCollection',
+        Right: 'create',
+        ExcludedPaths: [],
+        PayloadRestriction: { CategoryId: '${personalCategory}' },
+        QueryRestriction: { Area: '${allowedArea}' }
+      }      
+    ]));    
+
+    // Execute
+    await PayloadAndQueryController(req, res, next, mainConfig, getRoleAssignmentsForUser, getRoleByTitle, getPermissions, errorHandlerSpy);
+
+    // Assert
+    sinon.assert.calledOnce(res.status);
+    sinon.assert.calledOnce(res.json);
+    sinon.assert.calledWith(res.status, 200);
+    sinon.assert.calledWith(res.json, {
+      payload: { Area: '12345', CategoryId: '00001', Title: 'A new Blogpost' },
+      query: { $or: [{ Area: '12345' }], Area: '12345', Title: 'A new Blogpost' }
+    });
+    sinon.assert.notCalled(errorHandlerSpy);
+  });
+  
+  it('will return 200 status and the query if payload matches the permissions, if user was null', async () => {
+    // Prepare
+    const req: any = {
+      user : null,
       params: { 
         Right: 'create',
         Collection: 'myCollection' },
