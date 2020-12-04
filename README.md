@@ -1,5 +1,12 @@
 # Query Bouncer
 
+<span style="color:red; font-size: 50px; font-weight:bold;">THIS REPOSITORY HAS MOVED TO [GitLab](https://gitlab.com/relief-melone/query-bouncer) </span>
+
+<span style="color:red; font-size: 30px; font-weight:bold;">It will not be maintained on GitHub anymore!!!</span>
+
+
+
+
 The Goal of Query Bouncer is to let you worry about your application and not about your Authentication and Authorization in a Container Environment.
 
 ![architecture](https://raw.githubusercontent.com/relief-melone/query-bouncer/master/documentation/architectureOverview.gif "Architecture Overview")
